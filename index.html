@@ -351,67 +351,103 @@
     #power-up-app .pu-doc-header p { margin: 0; font-size: 13.5px; color: #d1d5db; }
 
     /* ==========================================================================
-       HERO COMPARISON CARD
+       HERO COMPARISON CARD (EXECUTIVE BESPOKE SPLIT)
        ========================================================================== */
     #power-up-app .pu-hero-card {
       background: var(--pu-white);
-      border: 1px solid var(--pu-border);
-      border-radius: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 20px;
       padding: 32px 30px;
-      box-shadow: var(--pu-shadow);
-      margin-bottom: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 16px 32px -4px rgba(10, 10, 12, 0.06);
+      margin-bottom: 24px;
+      position: relative;
     }
 
-    #power-up-app .pu-hero-split {
+    #power-up-app .pu-hero-split-wrap {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      text-align: center;
-      padding-bottom: 24px;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 26px;
       border-bottom: 1px solid var(--pu-border);
     }
 
-    @media (max-width: 640px) {
-      #power-up-app .pu-hero-split { grid-template-columns: 1fr; }
+    @media (max-width: 760px) {
+      #power-up-app .pu-hero-split-wrap {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      #power-up-app .pu-hero-vs-badge { display: none; }
+    }
+
+    #power-up-app .pu-hero-box {
+      border-radius: 16px;
+      padding: 24px 22px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    #power-up-app .pu-hero-box.solar {
+      background: linear-gradient(145deg, #f0f7ff 0%, #ffffff 100%);
+      border: 1.5px solid #bfdbfe;
+      box-shadow: 0 6px 20px rgba(29, 99, 220, 0.08);
+    }
+
+    #power-up-app .pu-hero-box.util {
+      background: linear-gradient(145deg, #fff7f7 0%, #ffffff 100%);
+      border: 1.5px solid #fecaca;
+      box-shadow: 0 6px 20px rgba(201, 59, 43, 0.06);
+    }
+
+    #power-up-app .pu-hero-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
     #power-up-app .pu-hero-kicker {
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.8px;
       text-transform: uppercase;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
-      margin-bottom: 6px;
     }
 
     #power-up-app .pu-hero-kicker.solar { color: var(--pu-solar-blue); }
     #power-up-app .pu-hero-kicker.util { color: var(--pu-utility); }
 
     #power-up-app .pu-hero-figure {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: -0.6px;
+      font-size: 34px;
+      font-weight: 850;
+      letter-spacing: -0.8px;
       line-height: 1.15;
     }
 
     #power-up-app .pu-hero-figure.solar { color: var(--pu-solar-blue); }
-    #power-up-app .pu-hero-figure.util { color: var(--pu-black); }
+    #power-up-app .pu-hero-figure.util { color: var(--pu-ink); }
+    #power-up-app .pu-hero-slash { color: var(--pu-muted); font-weight: 400; opacity: 0.6; margin: 0 4px; }
+    #power-up-app .pu-hero-mo { font-size: 30px; font-weight: 800; }
+    #power-up-app .pu-mo-unit { font-size: 14px; font-weight: 600; color: var(--pu-muted); letter-spacing: 0; }
 
     #power-up-app .pu-hero-caption {
       font-size: 12px;
       color: var(--pu-muted);
       margin-top: 4px;
+      font-weight: 500;
     }
 
     #power-up-app .pu-hero-rate-badge {
-      display: inline-block;
-      margin-top: 7px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       font-size: 11.5px;
       font-weight: 700;
-      padding: 3px 10px;
+      padding: 4px 11px;
       border-radius: 999px;
     }
 
@@ -427,46 +463,154 @@
       border: 1px solid var(--pu-utility-border);
     }
 
+    #power-up-app .pu-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--pu-solar-blue);
+      display: inline-block;
+    }
+
+    #power-up-app .pu-badge-dot.red {
+      background: var(--pu-utility);
+      box-shadow: 0 0 0 2px rgba(201, 59, 43, 0.2);
+    }
+
+    #power-up-app .pu-hero-perk-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    #power-up-app .pu-perk-pill {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #1e40af;
+      background: rgba(29, 99, 220, 0.08);
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    #power-up-app .pu-perk-pill.warn {
+      color: #991b1b;
+      background: rgba(201, 59, 43, 0.08);
+    }
+
+    #power-up-app .pu-hero-vs-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--pu-white);
+      border: 1.5px solid var(--pu-border);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--pu-muted);
+      z-index: 2;
+      letter-spacing: 0.5px;
+    }
+
+    /* Executive Schedule Table */
+    #power-up-app .pu-table-container {
+      margin-top: 24px;
+      border: 1px solid var(--pu-border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--pu-white);
+    }
+
+    #power-up-app .pu-table-bar {
+      background: #f8fafc;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--pu-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
     #power-up-app .pu-comp-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 12px;
-      font-size: 14.5px;
+      font-size: 14px;
     }
 
     #power-up-app .pu-comp-table th {
-      padding: 13px 10px;
-      font-size: 13px;
+      padding: 12px 14px;
+      font-size: 12px;
       font-weight: 700;
-      color: var(--pu-ink);
+      color: var(--pu-slate);
+      background: #fafbfc;
       border-bottom: 1px solid var(--pu-border);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
     }
 
     #power-up-app .pu-comp-table td {
-      padding: 13px 10px;
-      border-bottom: 1px solid #f3f4f6;
+      padding: 13px 14px;
+      border-bottom: 1px solid #f1f5f9;
       font-variant-numeric: tabular-nums;
     }
 
+    #power-up-app .pu-comp-table tr:hover td { background: #f8fafc; }
     #power-up-app .pu-comp-table tr:last-child td { border-bottom: none; }
-    #power-up-app .pu-comp-table .c-yr { text-align: left; color: var(--pu-muted); font-weight: 500; width: 64px; }
-    #power-up-app .pu-comp-table .c-sol { text-align: center; color: var(--pu-solar-blue); font-weight: 700; }
-    #power-up-app .pu-comp-table .c-utl { text-align: center; color: var(--pu-black); font-weight: 700; }
-    #power-up-app .pu-comp-table .c-sav { text-align: right; color: var(--pu-green); font-weight: 700; }
+    #power-up-app .pu-comp-table tr.row-yr1 td { background: #f8fbff; }
+    #power-up-app .pu-comp-table tr.row-last td { background: #fbfdfb; }
+    #power-up-app .pu-comp-table .c-yr { text-align: left; font-weight: 600; width: 95px; }
+    #power-up-app .pu-comp-table .c-sol { text-align: center; color: var(--pu-solar-blue); }
+    #power-up-app .pu-comp-table .c-utl { text-align: center; color: var(--pu-ink); }
+    #power-up-app .pu-comp-table .c-sav { text-align: right; }
 
-    /* Total Cumulative Savings Over Time Card */
+    #power-up-app .yr-pill {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--pu-slate);
+      background: #f1f5f9;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    #power-up-app .tag-now {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--pu-solar-blue);
+      background: var(--pu-solar-soft);
+      border: 1px solid var(--pu-solar-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-left: 3px;
+    }
+
+    #power-up-app .sav-pill {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--pu-green);
+      background: var(--pu-green-soft);
+      border: 1px solid var(--pu-green-border);
+      padding: 3px 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    /* Cumulative Savings Over Time */
     #power-up-app .pu-cum-panel {
-      margin-top: 22px;
-      border: 1px solid var(--pu-border);
-      border-radius: 12px;
-      padding: 20px 22px;
-      background: #fafafa;
+      margin-top: 24px;
+      border: 1px solid #bbf7d0;
+      border-radius: 14px;
+      padding: 22px 24px;
+      background: linear-gradient(180deg, #fbfdfb 0%, #f0fdf4 100%);
     }
 
     #power-up-app .pu-cum-heading {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--pu-ink);
       margin: 0 0 16px 0;
       display: flex;
       align-items: center;
@@ -475,14 +619,33 @@
       gap: 8px;
     }
 
-    #power-up-app .pu-cum-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 16px;
+    #power-up-app .pu-cum-total-pill {
+      font-size: 13px;
+      font-weight: 800;
+      color: #14532d;
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      padding: 4px 13px;
+      border-radius: 999px;
     }
 
-    #power-up-app .pu-cum-yr { font-size: 12px; color: var(--pu-muted); margin-bottom: 2px; }
-    #power-up-app .pu-cum-val { font-size: 21px; font-weight: 800; color: var(--pu-green); letter-spacing: -0.4px; }
+    #power-up-app .pu-cum-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+      gap: 12px;
+    }
+
+    #power-up-app .pu-milestone-tile {
+      background: var(--pu-white);
+      border: 1px solid #bbf7d0;
+      box-shadow: 0 2px 6px rgba(21, 128, 61, 0.05);
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+
+    #power-up-app .pu-cum-yr { font-size: 11.5px; font-weight: 700; color: var(--pu-muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
+    #power-up-app .pu-cum-val { font-size: 20px; font-weight: 850; color: var(--pu-green); letter-spacing: -0.4px; }
 
     /* ==========================================================================
        SIDE-BY-SIDE COMPARISON BOXES
@@ -1636,19 +1799,21 @@ window.PowerUpCalcEngine = (function () {
       const uRate = fmtCentsOrDollar(r.utilityRate);
       const uMo = fmtMoney(r.utilityMonthly);
       const annSave = fmtMoney(r.directSolarVsUtilAnnual);
+      const isYr1 = r.year === 1;
+      const isLast = r.year === calc.termYears;
 
       return `
-        <tr>
-          <td class="c-yr">${r.year}</td>
-          <td class="c-sol">${sRate} / ${sMo}</td>
-          <td class="c-utl">${uRate} / ${uMo}</td>
-          <td class="c-sav">${annSave}</td>
+        <tr class="${isYr1 ? 'row-yr1' : ''} ${isLast ? 'row-last' : ''}">
+          <td class="c-yr"><span class="yr-pill">Yr ${r.year}</span>${isYr1 ? ' <span class="tag-now">Today</span>' : ''}${isLast ? ' <span class="tag-now" style="background:#eefbf3; color:#15803d; border-color:#bbf7d0;">Term</span>' : ''}</td>
+          <td class="c-sol"><strong>${sMo}</strong> <span style="font-size:12px; color:var(--pu-muted);">(${sRate})</span></td>
+          <td class="c-utl"><strong>${uMo}</strong> <span style="font-size:12px; color:var(--pu-muted);">(${uRate})</span></td>
+          <td class="c-sav"><span class="sav-pill">+${annSave}</span></td>
         </tr>
       `;
     }).join("");
 
     const cumItemsHtml = calc.milestones.map(m => `
-      <div>
+      <div class="pu-milestone-tile">
         <div class="pu-cum-yr">Year ${m.year}</div>
         <div class="pu-cum-val">${fmtMoney(m.cumulativeSavings)}</div>
       </div>
@@ -1671,41 +1836,73 @@ window.PowerUpCalcEngine = (function () {
         </div>
       </div>
 
-      <!-- HERO SIDE-BY-SIDE SOLAR VS UTILITY COMPARISON -->
+      <!-- HERO SIDE-BY-SIDE SOLAR VS UTILITY COMPARISON (EXECUTIVE VISUAL CARDS) -->
       <div class="pu-hero-card" data-block="hero">
-        <div class="pu-hero-split">
-          <div>
-            <div class="pu-hero-kicker solar">☀️ ${solarHeaderLabel}</div>
-            <div class="pu-hero-figure solar">${heroSolarRate} / ${heroSolarMo}</div>
-            <div class="pu-hero-caption">Rate per kWh / Monthly Payment</div>
-            <span class="pu-hero-rate-badge solar">${solarGrowthText}</span>
+        <div class="pu-hero-split-wrap">
+          <!-- SOLAR CARD -->
+          <div class="pu-hero-box solar">
+            <div class="pu-hero-box-header">
+              <span class="pu-hero-kicker solar">☀️ ${solarHeaderLabel}</span>
+              <span class="pu-hero-rate-badge solar"><span class="pu-badge-dot"></span>${solarGrowthText}</span>
+            </div>
+            <div class="pu-hero-figure solar">${heroSolarMo} <span class="pu-hero-slash">/</span> <span style="font-size:24px; font-weight:700;">${heroSolarRate}</span></div>
+            <div class="pu-hero-caption">Fixed Monthly Payment / Projected Cost per kWh</div>
+            <div class="pu-hero-perk-row">
+              <span class="pu-perk-pill">🔒 Rate Lock</span>
+              <span class="pu-perk-pill">${isPropel ? "🏆 Path to Ownership" : "⚡ Clean Energy PPA"}</span>
+            </div>
           </div>
-          <div>
-            <div class="pu-hero-kicker util">⚡ YOUR UTILITY — TODAY</div>
-            <div class="pu-hero-figure util">${heroUtilRate} / ${heroUtilMo}</div>
-            <div class="pu-hero-caption">Rate per kWh / Monthly Payment</div>
-            <span class="pu-hero-rate-badge util">${utilGrowthText}</span>
+
+          <!-- VS BADGE -->
+          <div class="pu-hero-vs-badge">VS</div>
+
+          <!-- UTILITY CARD -->
+          <div class="pu-hero-box util">
+            <div class="pu-hero-box-header">
+              <span class="pu-hero-kicker util">⚡ YOUR UTILITY — TODAY</span>
+              <span class="pu-hero-rate-badge util"><span class="pu-badge-dot red"></span>${utilGrowthText}</span>
+            </div>
+            <div class="pu-hero-figure util">${heroUtilMo} <span class="pu-hero-slash">/</span> <span style="font-size:24px; font-weight:700;">${heroUtilRate}</span></div>
+            <div class="pu-hero-caption">Current Average Monthly Bill / Blended Rate per kWh</div>
+            <div class="pu-hero-perk-row">
+              <span class="pu-perk-pill warn">⚠️ Uncapped Annual Hikes</span>
+              <span class="pu-perk-pill warn">❌ Zero Equity</span>
+            </div>
           </div>
         </div>
 
-        <table class="pu-comp-table">
-          <thead>
-            <tr>
-              <th class="c-yr">Year</th>
-              <th class="c-sol">☀️ Solar Rate / Mo<br/><span style="font-size:11px; font-weight:500; color:var(--pu-muted);">(${solarGrowthText})</span></th>
-              <th class="c-utl">⚡ Utility Rate / Mo<br/><span style="font-size:11px; font-weight:500; color:var(--pu-muted);">(${utilGrowthText})</span></th>
-              <th class="c-sav">Annual Savings</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${tableRowsHtml}
-          </tbody>
-        </table>
+        <!-- 4-COLUMN COMPARISON SCHEDULE TABLE -->
+        <div class="pu-table-container">
+          <div class="pu-table-bar">
+            <strong>${calc.termYears}-Year Payment &amp; Savings Schedule</strong>
+            <span class="pu-help">Escalation Scenario: <strong>${scenarioLabel(calc.scenarioKey)}</strong></span>
+          </div>
+          <table class="pu-comp-table">
+            <thead>
+              <tr>
+                <th class="c-yr">Timeline</th>
+                <th class="c-sol">☀️ Solar Payment / Rate<br/><span style="font-size:10.5px; font-weight:500; text-transform:none; color:var(--pu-muted);">(${solarGrowthText})</span></th>
+                <th class="c-utl">⚡ Utility Bill / Rate<br/><span style="font-size:10.5px; font-weight:500; text-transform:none; color:var(--pu-muted);">(${utilGrowthText})</span></th>
+                <th class="c-sav">Est. Annual Savings</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tableRowsHtml}
+            </tbody>
+          </table>
+        </div>
 
+        <!-- TOTAL CUMULATIVE SAVINGS OVER TIME -->
         <div class="pu-cum-panel">
           <div class="pu-cum-heading">
-            <span>💰 Total Cumulative Savings Over Time</span>
-            <span style="font-size:12px; font-weight:500; color:var(--pu-muted);">${scenarioLabel(calc.scenarioKey)}</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:20px;">💰</span>
+              <div>
+                <strong style="font-size:15px; color:var(--pu-ink);">Total Cumulative Savings Over Time</strong>
+                <span style="font-size:12px; color:var(--pu-muted); display:block;">Direct net savings compared to staying with your utility</span>
+              </div>
+            </div>
+            <div class="pu-cum-total-pill">Total Projected Savings: ${fmtMoney(calc.lifetimeDirectSolarSavings)}</div>
           </div>
           <div class="pu-cum-grid">
             ${cumItemsHtml}
@@ -1716,7 +1913,7 @@ window.PowerUpCalcEngine = (function () {
       <!-- 1. SIDE-BY-SIDE: YOUR SOLAR PLAN VS. DOING NOTHING -->
       <section class="pu-doc-card" data-block="offer">
         <div class="pu-doc-card-head">
-          <h3>${escHtml(offerHeading)} vs. Your Utility</h3>
+          <h3><span>📊</span> ${escHtml(offerHeading)} vs. Your Utility</h3>
           <span class="pu-badge-green">Side-by-Side Comparison</span>
         </div>
 
@@ -1791,7 +1988,7 @@ window.PowerUpCalcEngine = (function () {
       <!-- 2. YOUR NEW MONTHLY ENERGY BUDGET (SIDE BY SIDE WITH OLD BILL) -->
       <section class="pu-doc-card" data-block="budget">
         <div class="pu-doc-card-head">
-          <h3>Your New Monthly Energy Budget</h3>
+          <h3><span>⚡</span> Your New Monthly Energy Budget</h3>
           <span style="font-size:12.5px; font-weight:600; color:var(--pu-muted);">Two small statements ≠ paying twice</span>
         </div>
 
@@ -1833,7 +2030,7 @@ window.PowerUpCalcEngine = (function () {
       <!-- 3. YOUR CUSTOM SOLAR & BATTERY SYSTEM -->
       <section class="pu-doc-card" data-block="system">
         <div class="pu-doc-card-head">
-          <h3>Your Custom Solar &amp; Battery System</h3>
+          <h3><span>☀️</span> Your Custom Solar &amp; Battery System</h3>
           <span class="pu-badge-green">${calc.energyOffsetPct}% Energy Offset</span>
         </div>
         <div class="pu-metric-row">
@@ -1876,7 +2073,7 @@ window.PowerUpCalcEngine = (function () {
       <!-- 4. EQUIPMENT & POWER OUTAGE PROTECTION -->
       <section class="pu-doc-card" data-block="equipment">
         <div class="pu-doc-card-head">
-          <h3>Equipment &amp; Power Outage Protection</h3>
+          <h3><span>🔋</span> Equipment &amp; Power Outage Protection</h3>
         </div>
         ${isPropel ? `
           <table class="pu-clean-table">
@@ -1897,15 +2094,18 @@ window.PowerUpCalcEngine = (function () {
 
         <div class="pu-cycle-grid">
           <div class="pu-cycle-step">
-            <strong>☀️ 1. Daytime Solar</strong>
+            <span class="pu-cycle-badge">STEP 1</span>
+            <strong>☀️ Daytime Solar</strong>
             <span>During an outage, your panels power your home directly and recharge your battery.</span>
           </div>
           <div class="pu-cycle-step">
-            <strong>🔋 2. Nighttime Battery</strong>
+            <span class="pu-cycle-badge">STEP 2</span>
+            <strong>🔋 Nighttime Battery</strong>
             <span>After sundown, stored battery power automatically keeps your essentials running.</span>
           </div>
           <div class="pu-cycle-step">
-            <strong>🔄 3. Next-Day Recharge</strong>
+            <span class="pu-cycle-badge">STEP 3</span>
+            <strong>🔄 Next-Day Recharge</strong>
             <span>Morning sunlight recharges your battery again to extend multi-day backup.</span>
           </div>
         </div>
@@ -1922,7 +2122,7 @@ window.PowerUpCalcEngine = (function () {
       <!-- 5. 30-YEAR PEACE-OF-MIND PROTECTION -->
       <section class="pu-doc-card" data-block="protection">
         <div class="pu-doc-card-head">
-          <h3>30-Year Peace-of-Mind Protection</h3>
+          <h3><span>🛡️</span> 30-Year Peace-of-Mind Protection</h3>
           ${appState.siConfirmed ? `<span class="pu-badge-green">Solar Insure ${escHtml(appState.siPlan)}</span>` : ""}
         </div>
 
