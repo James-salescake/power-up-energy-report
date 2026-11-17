@@ -822,9 +822,14 @@
 
           <div class="pu-section-label">Brand Logo</div>
           <div class="pu-field">
-            <label for="fLogoUpload">Upload Custom Logo File (Optional)</label>
+            <label for="fLogoUrl">Logo Image URL (Sales Cake Media Storage)</label>
+            <input type="url" id="fLogoUrl" placeholder="https://..." data-watch="Logo URL" />
+            <span class="pu-help">Paste direct image URL from Sales Cake / GHL Media Storage, or prefill via <code>?logo=...</code> URL parameter.</span>
+          </div>
+          <div class="pu-field">
+            <label for="fLogoUpload">Or Upload Local Logo File</label>
             <input type="file" id="fLogoUpload" accept="image/*" />
-            <span class="pu-help">Uses official Power Up Solutions vector logo by default. PNG and SVG transparency supported.</span>
+            <span class="pu-help">Uses official Power Up Solutions vector logo by default if neither is set.</span>
           </div>
         </div>
 
@@ -1485,6 +1490,7 @@ window.PowerUpCalcEngine = (function () {
     repName: "Alex Morgan",
     repEmail: "alex@powerupsolutions.example.com",
     repPhone: "(555) 234-8890",
+    logoUrl: "",
     logoDataUrl: "",
     utilityProvider: "PGE",
     utilityRate: 0.42,
@@ -1578,8 +1584,9 @@ window.PowerUpCalcEngine = (function () {
   }
 
   function getLogoSvg(heightPx) {
-    if (appState.logoDataUrl) {
-      return `<img src="${appState.logoDataUrl}" alt="Power Up Solutions" style="height:${heightPx}px; width:auto; max-width:260px; object-fit:contain;" />`;
+    const src = appState.logoUrl || appState.logoDataUrl;
+    if (src) {
+      return `<img src="${escHtml(src)}" alt="Power Up Solutions" style="height:${heightPx}px; width:auto; max-width:260px; object-fit:contain;" />`;
     }
     const w = Math.round(heightPx * (260 / 52));
     return `
@@ -1993,11 +2000,77 @@ window.PowerUpCalcEngine = (function () {
     } catch (e) {}
   }
 
+  /**
+   * Automatically parses Sales Cake / GHL merge tags passed via URL query parameters
+   * e.g. ?name={{contact.name}}&email={{contact.email}}&logo={{custom_values.company_logo}}
+   */
+  function applyUrlQueryParams() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (!params) return;
+
+      const paramMap = {
+        customer_name: "customerName",
+        name: "customerName",
+        customer_email: "customerEmail",
+        email: "customerEmail",
+        customer_address: "customerAddress",
+        address: "customerAddress",
+        rep_name: "repName",
+        rep: "repName",
+        rep_email: "repEmail",
+        rep_phone: "repPhone",
+        phone: "repPhone",
+        logo: "logoUrl",
+        logo_url: "logoUrl",
+        logourl: "logoUrl",
+        utility_rate: "utilityRate",
+        rate: "utilityRate",
+        bill: "currentMonthlyBill",
+        current_bill: "currentMonthlyBill",
+        monthly_bill: "currentMonthlyBill",
+        kwh: "annualConsumption",
+        usage: "annualConsumption",
+        annual_usage: "annualConsumption",
+        system_size: "systemSizeKw",
+        kw: "systemSizeKw",
+        status: "reportStatus",
+        version: "reportVersion",
+        utility: "utilityProvider",
+        provider: "utilityProvider",
+        offer: "offerType",
+        term: "termYears"
+      };
+
+      let updated = false;
+      for (const [param, stateKey] of Object.entries(paramMap)) {
+        if (params.has(param)) {
+          const rawVal = params.get(param);
+          if (rawVal !== null && rawVal !== undefined) {
+            const val = rawVal.trim();
+            if (val) {
+              if (typeof appState[stateKey] === "number") {
+                const num = parseFloat(val);
+                if (!isNaN(num)) appState[stateKey] = num;
+              } else {
+                appState[stateKey] = val;
+              }
+              updated = true;
+            }
+          }
+        }
+      }
+      if (updated) {
+        saveLocalDraft();
+      }
+    } catch (e) {}
+  }
+
   function syncFormFromState() {
     const map = {
       fCustomerName: "customerName", fCustomerEmail: "customerEmail", fCustomerAddress: "customerAddress",
       fReportVersion: "reportVersion", fReportStatus: "reportStatus", fRepName: "repName",
-      fRepEmail: "repEmail", fRepPhone: "repPhone", fUtilityProvider: "utilityProvider",
+      fRepEmail: "repEmail", fRepPhone: "repPhone", fLogoUrl: "logoUrl", fUtilityProvider: "utilityProvider",
       fUtilityRate: "utilityRate", fAnnualConsumption: "annualConsumption", fCurrentMonthlyBill: "currentMonthlyBill",
       fRemainingUtilityMonthly: "remainingUtilityMonthly", fTrueUpReserveMonthly: "trueUpReserveMonthly",
       fTrueUpLowMonthly: "trueUpLowMonthly", fTrueUpHighMonthly: "trueUpHighMonthly",
@@ -2049,6 +2122,13 @@ window.PowerUpCalcEngine = (function () {
     appState.repName = document.getElementById("fRepName").value.trim() || "Power Up Representative";
     appState.repEmail = document.getElementById("fRepEmail").value.trim();
     appState.repPhone = document.getElementById("fRepPhone").value.trim();
+
+    const logoUrlEl = document.getElementById("fLogoUrl");
+    if (logoUrlEl) {
+      appState.logoUrl = logoUrlEl.value.trim();
+      const topLogoSlot = document.getElementById("puTopLogoSlot");
+      if (topLogoSlot) topLogoSlot.innerHTML = getLogoSvg(38);
+    }
 
     appState.utilityProvider = document.getElementById("fUtilityProvider").value;
     const utilRateParsed = parseFloat(document.getElementById("fUtilityRate").value);
@@ -2618,6 +2698,7 @@ window.PowerUpCalcEngine = (function () {
   }
 
   loadLocalDraft();
+  applyUrlQueryParams();
   syncFormFromState();
   bindEvents();
   refreshCustomerCanvas("");
