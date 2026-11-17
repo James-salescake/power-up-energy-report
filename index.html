@@ -1,0 +1,2627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Power Up Solutions — Personalized Energy Report Studio</title>
+  <style>
+    /* ==========================================================================
+       POWER UP SOLUTIONS — BESPOKE EXECUTIVE DESIGN SYSTEM (GHL-SCOPED)
+       Pure Black & White | Warm Solar Gold | Savings Green | Utility Alert
+       ========================================================================== */
+    #power-up-app {
+      --pu-black: #0a0a0c;
+      --pu-charcoal: #16181d;
+      --pu-ink: #111827;
+      --pu-slate: #374151;
+      --pu-muted: #6b7280;
+      --pu-border: #e5e7eb;
+      --pu-bg: #f4f5f7;
+      --pu-white: #ffffff;
+      --pu-gold: #d99b16;
+      --pu-gold-dark: #a16207;
+      --pu-gold-soft: #fdf8eb;
+      --pu-gold-border: #edd38a;
+      --pu-solar-blue: #1d63dc;
+      --pu-solar-soft: #eff6ff;
+      --pu-solar-border: #bfdbfe;
+      --pu-green: #15803d;
+      --pu-green-soft: #eefbf3;
+      --pu-green-border: #bbf7d0;
+      --pu-utility: #c93b2b;
+      --pu-utility-soft: #fef2f2;
+      --pu-utility-border: #fecaca;
+      --pu-radius: 14px;
+      --pu-shadow: 0 6px 24px rgba(10, 10, 12, 0.05);
+
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--pu-ink);
+      background: var(--pu-bg);
+      line-height: 1.5;
+      font-size: 15px;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #power-up-app *, #power-up-app *::before, #power-up-app *::after {
+      box-sizing: border-box;
+    }
+
+    /* ==========================================================================
+       TOP BRANDED HEADER BAR
+       ========================================================================== */
+    #power-up-app .pu-topbar {
+      background: var(--pu-black);
+      color: var(--pu-white);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 2px solid var(--pu-gold);
+      position: sticky;
+      top: 0;
+      z-index: 120;
+    }
+
+    #power-up-app .pu-brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    #power-up-app .pu-brand-divider {
+      width: 1px;
+      height: 28px;
+      background: #2e323b;
+    }
+
+    #power-up-app .pu-brand-tag {
+      font-size: 12px;
+      font-weight: 600;
+      color: #9ca3af;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    #power-up-app .pu-nav-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    #power-up-app .pu-btn {
+      appearance: none;
+      border: 1px solid #2f343f;
+      background: #181b20;
+      color: var(--pu-white);
+      font-weight: 600;
+      font-size: 13px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    #power-up-app .pu-btn:hover { background: #262a33; }
+    #power-up-app .pu-btn:focus-visible { outline: 2px solid var(--pu-gold); outline-offset: 2px; }
+
+    #power-up-app .pu-btn-light {
+      background: var(--pu-white);
+      color: var(--pu-ink);
+      border-color: var(--pu-border);
+    }
+
+    #power-up-app .pu-btn-light:hover { background: #f3f4f6; }
+
+    #power-up-app .pu-btn-gold {
+      background: var(--pu-gold);
+      color: var(--pu-black);
+      border-color: var(--pu-gold);
+      font-weight: 700;
+    }
+
+    #power-up-app .pu-btn-gold:hover { background: #e8aa23; }
+
+    #power-up-app .pu-btn-green {
+      background: var(--pu-green);
+      color: var(--pu-white);
+      border-color: var(--pu-green);
+    }
+
+    #power-up-app .pu-btn-green:hover { background: #166534; }
+
+    #power-up-app .pu-btn-danger {
+      background: var(--pu-utility-soft);
+      color: var(--pu-utility);
+      border-color: #fecaca;
+    }
+
+    #power-up-app .pu-btn-danger:hover {
+      background: #fee2e2;
+    }
+
+    #power-up-app .pu-status-pill {
+      background: rgba(217, 155, 22, 0.16);
+      color: #f3c456;
+      border: 1px solid rgba(217, 155, 22, 0.45);
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       SPLIT WORKSPACE: LEFT COMPACT EDITOR + RIGHT LIVE CUSTOMER PREVIEW
+       ========================================================================== */
+    #power-up-app .pu-workspace {
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      min-height: calc(100vh - 64px);
+    }
+
+    #power-up-app.client-fullscreen .pu-workspace { grid-template-columns: 1fr; }
+    #power-up-app.client-fullscreen .pu-editor-pane { display: none; }
+    #power-up-app .pu-present-only { display: none; }
+    #power-up-app.client-fullscreen .pu-present-only { display: inline-flex; }
+    #power-up-app.client-fullscreen .pu-builder-only { display: none; }
+
+    @media (max-width: 1060px) {
+      #power-up-app .pu-workspace { grid-template-columns: 1fr; }
+    }
+
+    #power-up-app .pu-editor-pane {
+      background: var(--pu-white);
+      border-right: 1px solid var(--pu-border);
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 64px);
+      position: sticky;
+      top: 64px;
+    }
+
+    @media (max-width: 1060px) {
+      #power-up-app .pu-editor-pane {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--pu-border);
+      }
+    }
+
+    #power-up-app .pu-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-bottom: 1px solid var(--pu-border);
+      background: #fafafa;
+      padding: 8px 8px 0;
+      gap: 3px;
+      flex-shrink: 0;
+    }
+
+    #power-up-app .pu-tab-btn {
+      appearance: none;
+      border: 1px solid transparent;
+      border-bottom: none;
+      background: transparent;
+      color: var(--pu-muted);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 4px;
+      border-radius: 8px 8px 0 0;
+      cursor: pointer;
+      text-align: center;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    #power-up-app .pu-tab-btn:hover { color: var(--pu-ink); }
+    #power-up-app .pu-tab-btn.active {
+      background: var(--pu-white);
+      color: var(--pu-black);
+      border-color: var(--pu-border);
+      box-shadow: 0 2px 0 var(--pu-white);
+      margin-bottom: -1px;
+    }
+
+    #power-up-app .pu-editor-scroll {
+      padding: 18px 20px 36px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    #power-up-app .pu-tab-panel { display: none; }
+    #power-up-app .pu-tab-panel.active { display: block; }
+
+    #power-up-app .pu-section-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--pu-muted);
+      margin: 18px 0 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #f1f3f5;
+    }
+
+    #power-up-app .pu-section-label:first-child { margin-top: 0; }
+    #power-up-app .pu-form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    #power-up-app .pu-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+    #power-up-app .pu-field label { font-size: 12px; font-weight: 700; color: var(--pu-slate); }
+    #power-up-app .pu-field input,
+    #power-up-app .pu-field select,
+    #power-up-app .pu-field textarea {
+      width: 100%;
+      padding: 8px 11px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 13.5px;
+      background: var(--pu-white);
+      color: var(--pu-ink);
+      min-height: 38px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    #power-up-app .pu-field input:focus,
+    #power-up-app .pu-field select:focus,
+    #power-up-app .pu-field textarea:focus {
+      outline: none;
+      border-color: var(--pu-gold);
+      box-shadow: 0 0 0 3px rgba(217, 155, 22, 0.18);
+    }
+
+    #power-up-app .pu-help { font-size: 12px; color: var(--pu-muted); line-height: 1.4; }
+    #power-up-app .pu-check-row { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; padding: 5px 0; cursor: pointer; user-select: none; }
+    #power-up-app .pu-check-row input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--pu-black); cursor: pointer; }
+
+    /* ==========================================================================
+       RIGHT PANE: CLEAN SINGLE-DOCUMENT CUSTOMER CANVAS
+       ========================================================================== */
+    #power-up-app .pu-preview-pane {
+      padding: 26px 24px 80px;
+      background: var(--pu-bg);
+      overflow-y: auto;
+    }
+
+    #power-up-app .pu-doc-sheet {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    #power-up-app .pu-live-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      background: var(--pu-white);
+      border: 1px solid var(--pu-border);
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 18px;
+      box-shadow: var(--pu-shadow);
+    }
+
+    #power-up-app .pu-change-toast {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--pu-gold-dark);
+      background: var(--pu-gold-soft);
+      border: 1px solid var(--pu-gold-border);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    @keyframes puGoldFlash {
+      0% { box-shadow: 0 0 0 4px rgba(217, 155, 22, 0.45); }
+      100% { box-shadow: var(--pu-shadow); }
+    }
+
+    #power-up-app .pu-flash-updated {
+      animation: puGoldFlash 0.85s ease-out;
+    }
+
+    /* Branded Document Header Card */
+    #power-up-app .pu-doc-header {
+      background: var(--pu-black);
+      color: var(--pu-white);
+      border-radius: var(--pu-radius);
+      padding: 24px 28px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 3px solid var(--pu-gold);
+    }
+
+    #power-up-app .pu-doc-header h2 { margin: 0 0 4px; font-size: 20px; font-weight: 700; }
+    #power-up-app .pu-doc-header p { margin: 0; font-size: 13.5px; color: #d1d5db; }
+
+    /* ==========================================================================
+       HERO COMPARISON CARD
+       ========================================================================== */
+    #power-up-app .pu-hero-card {
+      background: var(--pu-white);
+      border: 1px solid var(--pu-border);
+      border-radius: 16px;
+      padding: 32px 30px;
+      box-shadow: var(--pu-shadow);
+      margin-bottom: 20px;
+    }
+
+    #power-up-app .pu-hero-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--pu-border);
+    }
+
+    @media (max-width: 640px) {
+      #power-up-app .pu-hero-split { grid-template-columns: 1fr; }
+    }
+
+    #power-up-app .pu-hero-kicker {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    #power-up-app .pu-hero-kicker.solar { color: var(--pu-solar-blue); }
+    #power-up-app .pu-hero-kicker.util { color: var(--pu-utility); }
+
+    #power-up-app .pu-hero-figure {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      line-height: 1.15;
+    }
+
+    #power-up-app .pu-hero-figure.solar { color: var(--pu-solar-blue); }
+    #power-up-app .pu-hero-figure.util { color: var(--pu-black); }
+
+    #power-up-app .pu-hero-caption {
+      font-size: 12px;
+      color: var(--pu-muted);
+      margin-top: 4px;
+    }
+
+    #power-up-app .pu-hero-rate-badge {
+      display: inline-block;
+      margin-top: 7px;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    #power-up-app .pu-hero-rate-badge.solar {
+      background: var(--pu-solar-soft);
+      color: var(--pu-solar-blue);
+      border: 1px solid var(--pu-solar-border);
+    }
+
+    #power-up-app .pu-hero-rate-badge.util {
+      background: var(--pu-utility-soft);
+      color: var(--pu-utility);
+      border: 1px solid var(--pu-utility-border);
+    }
+
+    #power-up-app .pu-comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14.5px;
+    }
+
+    #power-up-app .pu-comp-table th {
+      padding: 13px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--pu-ink);
+      border-bottom: 1px solid var(--pu-border);
+    }
+
+    #power-up-app .pu-comp-table td {
+      padding: 13px 10px;
+      border-bottom: 1px solid #f3f4f6;
+      font-variant-numeric: tabular-nums;
+    }
+
+    #power-up-app .pu-comp-table tr:last-child td { border-bottom: none; }
+    #power-up-app .pu-comp-table .c-yr { text-align: left; color: var(--pu-muted); font-weight: 500; width: 64px; }
+    #power-up-app .pu-comp-table .c-sol { text-align: center; color: var(--pu-solar-blue); font-weight: 700; }
+    #power-up-app .pu-comp-table .c-utl { text-align: center; color: var(--pu-black); font-weight: 700; }
+    #power-up-app .pu-comp-table .c-sav { text-align: right; color: var(--pu-green); font-weight: 700; }
+
+    /* Total Cumulative Savings Over Time Card */
+    #power-up-app .pu-cum-panel {
+      margin-top: 22px;
+      border: 1px solid var(--pu-border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      background: #fafafa;
+    }
+
+    #power-up-app .pu-cum-heading {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--pu-ink);
+      margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    #power-up-app .pu-cum-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 16px;
+    }
+
+    #power-up-app .pu-cum-yr { font-size: 12px; color: var(--pu-muted); margin-bottom: 2px; }
+    #power-up-app .pu-cum-val { font-size: 21px; font-weight: 800; color: var(--pu-green); letter-spacing: -0.4px; }
+
+    /* ==========================================================================
+       SIDE-BY-SIDE COMPARISON BOXES
+       ========================================================================== */
+    #power-up-app .pu-vs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 12px 0;
+    }
+
+    @media (max-width: 640px) {
+      #power-up-app .pu-vs-grid { grid-template-columns: 1fr; }
+    }
+
+    #power-up-app .pu-vs-col {
+      border-radius: 12px;
+      padding: 18px 20px;
+      border: 1px solid var(--pu-border);
+    }
+
+    #power-up-app .pu-vs-col.solar {
+      background: var(--pu-solar-soft);
+      border-color: var(--pu-solar-border);
+    }
+
+    #power-up-app .pu-vs-col.util {
+      background: var(--pu-utility-soft);
+      border-color: var(--pu-utility-border);
+    }
+
+    #power-up-app .pu-vs-col.green {
+      background: var(--pu-green-soft);
+      border-color: var(--pu-green-border);
+    }
+
+    #power-up-app .pu-vs-tag {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    #power-up-app .pu-vs-col.solar .pu-vs-tag { color: var(--pu-solar-blue); }
+    #power-up-app .pu-vs-col.util .pu-vs-tag { color: var(--pu-utility); }
+    #power-up-app .pu-vs-col.green .pu-vs-tag { color: var(--pu-green); }
+
+    #power-up-app .pu-vs-main {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      color: var(--pu-ink);
+      line-height: 1.2;
+    }
+
+    #power-up-app .pu-vs-col.solar .pu-vs-main { color: var(--pu-solar-blue); }
+    #power-up-app .pu-vs-col.green .pu-vs-main { color: var(--pu-green); }
+
+    #power-up-app .pu-vs-list {
+      margin: 10px 0 0;
+      padding-left: 16px;
+      font-size: 13.5px;
+      color: var(--pu-slate);
+      line-height: 1.55;
+    }
+
+    /* Clean Executive Document Cards */
+    #power-up-app .pu-doc-card {
+      background: var(--pu-white);
+      border: 1px solid var(--pu-border);
+      border-radius: var(--pu-radius);
+      padding: 24px 26px;
+      box-shadow: var(--pu-shadow);
+      margin-bottom: 18px;
+    }
+
+    #power-up-app .pu-doc-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f1f3f5;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #power-up-app .pu-doc-card-head h3 {
+      margin: 0;
+      font-size: 17.5px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+
+    #power-up-app .pu-badge-green {
+      background: var(--pu-green-soft);
+      color: var(--pu-green);
+      border: 1px solid var(--pu-green-border);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 999px;
+    }
+
+    #power-up-app .pu-metric-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    #power-up-app .pu-metric {
+      border: 1px solid var(--pu-border);
+      border-radius: 10px;
+      padding: 14px 15px;
+      background: #fcfcfd;
+    }
+
+    #power-up-app .pu-metric.gold { background: var(--pu-gold-soft); border-color: var(--pu-gold-border); }
+    #power-up-app .pu-metric.green { background: var(--pu-green-soft); border-color: var(--pu-green-border); }
+    #power-up-app .pu-metric-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--pu-muted); }
+    #power-up-app .pu-metric-num { font-size: 21px; font-weight: 800; margin-top: 3px; color: var(--pu-ink); }
+    #power-up-app .pu-metric.green .pu-metric-num { color: var(--pu-green); }
+
+    /* Visual Benefit Tiles */
+    #power-up-app .pu-benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    #power-up-app .pu-benefit-tile {
+      border: 1px solid var(--pu-border);
+      border-radius: 10px;
+      padding: 14px 15px;
+      background: #fafafa;
+    }
+
+    #power-up-app .pu-benefit-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--pu-ink);
+      margin-bottom: 4px;
+    }
+
+    #power-up-app .pu-benefit-desc {
+      font-size: 13px;
+      color: var(--pu-slate);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    /* 3-Step Visual Outage Cycle */
+    #power-up-app .pu-cycle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    @media (max-width: 640px) {
+      #power-up-app .pu-cycle-grid { grid-template-columns: 1fr; }
+    }
+
+    #power-up-app .pu-cycle-step {
+      background: var(--pu-green-soft);
+      border: 1px solid var(--pu-green-border);
+      border-radius: 10px;
+      padding: 13px 14px;
+    }
+
+    #power-up-app .pu-cycle-step strong { display: block; font-size: 13.5px; color: #14532d; margin-bottom: 3px; }
+    #power-up-app .pu-cycle-step span { font-size: 12.5px; color: #166534; line-height: 1.4; display: block; }
+
+    #power-up-app .pu-clean-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    #power-up-app .pu-clean-table th,
+    #power-up-app .pu-clean-table td { padding: 10px 12px; border-bottom: 1px solid #f1f3f5; text-align: left; }
+    #power-up-app .pu-clean-table th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--pu-muted); background: #fafafa; }
+    #power-up-app .pu-clean-table td.num,
+    #power-up-app .pu-clean-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+    #power-up-app details.pu-drawer {
+      border: 1px solid var(--pu-border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      margin-top: 12px;
+      background: #fafafa;
+    }
+
+    #power-up-app details.pu-drawer summary { font-weight: 700; font-size: 13px; cursor: pointer; color: var(--pu-slate); }
+
+    #power-up-app .pu-shot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    #power-up-app .pu-shot-item { border: 1px solid var(--pu-border); border-radius: 8px; padding: 8px; background: #fafafa; }
+    #power-up-app .pu-shot-item img { width: 100%; height: 100px; object-fit: cover; border-radius: 6px; margin-bottom: 6px; }
+    #power-up-app .pu-doc-photo { max-width: 100%; border-radius: 10px; border: 1px solid var(--pu-border); margin-top: 12px; display: block; }
+
+    #power-up-app .pu-present-footer {
+      background: var(--pu-black);
+      color: var(--pu-white);
+      border-radius: var(--pu-radius);
+      padding: 24px 28px;
+      margin-top: 24px;
+      border-top: 3px solid var(--pu-gold);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    @media print {
+      #power-up-app .pu-topbar,
+      #power-up-app .pu-editor-pane,
+      #power-up-app .no-print { display: none !important; }
+      #power-up-app .pu-workspace { display: block !important; }
+      #power-up-app .pu-preview-pane { padding: 0 !important; background: #fff !important; }
+      #power-up-app .pu-hero-card,
+      #power-up-app .pu-doc-card,
+      #power-up-app .pu-vs-grid {
+        box-shadow: none !important;
+        border: 1px solid #d1d5db !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="power-up-app">
+  <!-- TOP BRAND BAR WITH POWER UP SOLUTIONS VECTOR LOGO -->
+  <header class="pu-topbar">
+    <div class="pu-brand-lockup">
+      <div id="puTopLogoSlot">
+        <svg width="195" height="38" viewBox="0 0 260 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Power Up Solutions">
+          <path d="M26 6C13.85 6 4 15.85 4 28V47H12.5V37.8C16.2 40.4 20.9 42 26 42C38.15 42 48 32.15 48 20C48 12.27 38.15 6 26 6ZM26 33.8C18.38 33.8 12.2 27.62 12.2 20C12.2 12.38 18.38 6.2 26 6.2C33.62 6.2 39.8 12.38 39.8 20C39.8 27.62 33.62 33.8 26 33.8Z" fill="#FFFFFF"/>
+          <path d="M26 12.5V21" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M20.6 15.6C18.9 17 17.8 19.1 17.8 21.5C17.8 26 21.5 29.7 26 29.7C30.5 29.7 34.2 26 34.2 21.5C34.2 19.1 33.1 17 31.4 15.6" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round"/>
+          <text x="60" y="23" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="18.5" letter-spacing="1.2">POWER UP</text>
+          <text x="60" y="43" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="18.5" letter-spacing="1.2">SOLUTIONS</text>
+        </svg>
+      </div>
+      <div class="pu-brand-divider"></div>
+      <span class="pu-brand-tag" id="puTopModeTag">Energy Report Studio</span>
+    </div>
+
+    <div class="pu-nav-actions">
+      <span class="pu-status-pill" id="puStatusPill">Draft</span>
+
+      <!-- BUILDER MODE ACTIONS -->
+      <button type="button" class="pu-btn pu-builder-only" id="btnExportJson" title="Export proposal state as JSON backup">⬇ Backup</button>
+      <label class="pu-btn pu-builder-only" style="margin:0; cursor:pointer;" tabindex="0" id="lblImportJson" title="Restore proposal from JSON backup">
+        ⬆ Restore
+        <input type="file" id="inputImportJson" accept=".json,application/json" style="display:none;" />
+      </label>
+      <button type="button" class="pu-btn pu-btn-gold pu-builder-only" id="btnFinalizeAndPresent">▶ Finalize &amp; Present</button>
+
+      <!-- PRESENTATION MODE ACTIONS -->
+      <button type="button" class="pu-btn pu-present-only" id="btnBackToEditor" title="Return to editor pane (or press Esc)">✎ Back to Editor</button>
+      <button type="button" class="pu-btn pu-btn-gold pu-present-only" id="btnTriggerEmailOption">✉ Email Proposal to Customer</button>
+    </div>
+  </header>
+
+  <!-- SPLIT WORKSPACE: LEFT COMPACT EDITOR | RIGHT LIVE CUSTOMER DOCUMENT -->
+  <div class="pu-workspace">
+    <!-- LEFT PANE: CLEAN TABBED EDITOR -->
+    <aside class="pu-editor-pane no-print" id="puEditorPane">
+      <nav class="pu-tabs" role="tablist" aria-label="Proposal Configuration Tabs">
+        <button type="button" class="pu-tab-btn active" role="tab" aria-selected="true" aria-controls="tab-client" data-tab="tab-client">1. Client</button>
+        <button type="button" class="pu-tab-btn" role="tab" aria-selected="false" aria-controls="tab-utility" data-tab="tab-utility">2. Utility</button>
+        <button type="button" class="pu-tab-btn" role="tab" aria-selected="false" aria-controls="tab-system" data-tab="tab-system">3. System</button>
+        <button type="button" class="pu-tab-btn" role="tab" aria-selected="false" aria-controls="tab-offer" data-tab="tab-offer">4. Offer</button>
+        <button type="button" class="pu-tab-btn" role="tab" aria-selected="false" aria-controls="tab-protect" data-tab="tab-protect">5. Protect</button>
+      </nav>
+
+      <div class="pu-editor-scroll">
+        <!-- TAB 1: CLIENT & REP -->
+        <div class="pu-tab-panel active" id="tab-client" role="tabpanel">
+          <div class="pu-section-label">Customer Details</div>
+          <div class="pu-field">
+            <label for="fCustomerName">Customer Full Name</label>
+            <input type="text" id="fCustomerName" value="Jordan & Taylor Rivera" data-watch="Customer Name" />
+          </div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fCustomerEmail">Customer Email</label>
+              <input type="email" id="fCustomerEmail" value="rivera.home@example.com" data-watch="Customer Email" />
+            </div>
+            <div class="pu-field">
+              <label for="fReportVersion">Report Version</label>
+              <input type="text" id="fReportVersion" value="V1" data-watch="Report Version" />
+            </div>
+          </div>
+          <div class="pu-field">
+            <label for="fCustomerAddress">Service Address / City</label>
+            <input type="text" id="fCustomerAddress" value="1420 Suncrest Way, Riverside, CA" data-watch="Service Address" />
+          </div>
+          <div class="pu-field">
+            <label for="fReportStatus">Workflow Status</label>
+            <select id="fReportStatus" data-watch="Workflow Status">
+              <option value="Draft">Draft</option>
+              <option value="Ready to Present">Ready to Present</option>
+              <option value="Presented">Presented</option>
+              <option value="Revision Requested">Revision Requested</option>
+              <option value="Ready to Finalize">Ready to Finalize</option>
+              <option value="Finalized">Finalized</option>
+              <option value="Sent">Sent</option>
+            </select>
+          </div>
+
+          <div class="pu-section-label">Energy Consultant</div>
+          <div class="pu-field">
+            <label for="fRepName">Representative Name</label>
+            <input type="text" id="fRepName" value="Alex Morgan" data-watch="Representative" />
+          </div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fRepEmail">Representative Email</label>
+              <input type="email" id="fRepEmail" value="alex@powerupsolutions.example.com" data-watch="Rep Email" />
+            </div>
+            <div class="pu-field">
+              <label for="fRepPhone">Representative Phone</label>
+              <input type="text" id="fRepPhone" value="(555) 234-8890" data-watch="Rep Phone" />
+            </div>
+          </div>
+
+          <div class="pu-section-label">Brand Logo</div>
+          <div class="pu-field">
+            <label for="fLogoUpload">Upload Custom Logo File (Optional)</label>
+            <input type="file" id="fLogoUpload" accept="image/*" />
+            <span class="pu-help">Uses official Power Up Solutions vector logo by default. PNG and SVG transparency supported.</span>
+          </div>
+        </div>
+
+        <!-- TAB 2: UTILITY & SCENARIOS -->
+        <div class="pu-tab-panel" id="tab-utility" role="tabpanel">
+          <div class="pu-section-label">Current Utility Baseline</div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fUtilityProvider">Utility Preset (Internal)</label>
+              <select id="fUtilityProvider" data-watch="Utility Preset">
+                <option value="PGE" selected>PG&amp;E (~$0.42/kWh)</option>
+                <option value="SCE">SCE (~$0.37/kWh)</option>
+                <option value="IID">IID (~$0.24/kWh)</option>
+                <option value="Custom">Custom Utility</option>
+              </select>
+            </div>
+            <div class="pu-field">
+              <label for="fUtilityRate">Blended Rate ($/kWh)</label>
+              <input type="number" id="fUtilityRate" step="0.001" min="0.001" value="0.42" data-watch="Utility Rate" />
+            </div>
+          </div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fAnnualConsumption">Annual Usage (kWh)</label>
+              <input type="number" id="fAnnualConsumption" step="100" min="500" value="8200" data-watch="Annual Usage" />
+            </div>
+            <div class="pu-field">
+              <label for="fCurrentMonthlyBill">Current Avg Bill ($/mo)</label>
+              <input type="number" id="fCurrentMonthlyBill" step="1" min="0" value="287" data-watch="Current Monthly Bill" />
+            </div>
+          </div>
+
+          <div class="pu-section-label">Post-Solar Utility &amp; True-Up</div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fRemainingUtilityMonthly">Remaining Utility ($/mo)</label>
+              <input type="number" id="fRemainingUtilityMonthly" step="1" min="0" value="18" data-watch="Remaining Utility" />
+            </div>
+            <div class="pu-field">
+              <label for="fTrueUpReserveMonthly">True-Up Reserve ($/mo)</label>
+              <input type="number" id="fTrueUpReserveMonthly" step="1" min="0" value="12" data-watch="True-Up Reserve" />
+            </div>
+          </div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fTrueUpLowMonthly">True-Up Range Low ($)</label>
+              <input type="number" id="fTrueUpLowMonthly" step="1" min="0" value="8" data-watch="True-Up Range" />
+            </div>
+            <div class="pu-field">
+              <label for="fTrueUpHighMonthly">True-Up Range High ($)</label>
+              <input type="number" id="fTrueUpHighMonthly" step="1" min="0" value="24" data-watch="True-Up Range" />
+            </div>
+          </div>
+
+          <div class="pu-section-label">Rate Escalation Scenarios</div>
+          <div class="pu-field">
+            <label for="fActiveScenario">Active Comparison Scenario</label>
+            <select id="fActiveScenario" data-watch="Utility Scenario">
+              <option value="0">0% / yr (Flat Utility Rate)</option>
+              <option value="3.4">3.4% / yr Utility Increase</option>
+              <option value="6">6.0% / yr Utility Increase</option>
+              <option value="9.4" selected>9.4% / yr Utility Increase</option>
+              <option value="custom">Custom Year-by-Year Schedule</option>
+            </select>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+            <label class="pu-check-row"><input type="checkbox" class="scen-approve" value="0" checked /> 0%</label>
+            <label class="pu-check-row"><input type="checkbox" class="scen-approve" value="3.4" checked /> 3.4%</label>
+            <label class="pu-check-row"><input type="checkbox" class="scen-approve" value="6" checked /> 6%</label>
+            <label class="pu-check-row"><input type="checkbox" class="scen-approve" value="9.4" checked /> 9.4%</label>
+            <label class="pu-check-row"><input type="checkbox" class="scen-approve" value="custom" checked /> Custom</label>
+          </div>
+
+          <div style="background:#f9fafb; padding:10px; border-radius:8px; border:1px solid var(--pu-border);">
+            <div class="pu-form-2col">
+              <div class="pu-field">
+                <label for="fCustomFirstYear">Custom Yr 1 (%)</label>
+                <input type="number" id="fCustomFirstYear" step="0.1" value="8.0" />
+              </div>
+              <div class="pu-field">
+                <label for="fCustomRangeEnd">Through Year #</label>
+                <input type="number" id="fCustomRangeEnd" min="1" max="30" value="3" />
+              </div>
+            </div>
+            <div class="pu-form-2col">
+              <div class="pu-field">
+                <label for="fCustomLaterYears">Later Years (%)</label>
+                <input type="number" id="fCustomLaterYears" step="0.1" value="4.5" />
+              </div>
+              <div class="pu-field" style="justify-content:flex-end;">
+                <button type="button" class="pu-btn pu-btn-light" id="btnApplyCustomSchedule">Apply Range</button>
+              </div>
+            </div>
+            <button type="button" class="pu-btn pu-btn-light" id="btnToggleYearEditor" style="width:100%; justify-content:center; margin-top:4px;">Edit Individual Years (1–30)</button>
+            <div id="puYearByYearGrid" style="display:none; margin-top:8px; grid-template-columns:repeat(5, 1fr); gap:5px;"></div>
+          </div>
+        </div>
+
+        <!-- TAB 3: SOLAR DESIGN & BATTERY -->
+        <div class="pu-tab-panel" id="tab-system" role="tabpanel">
+          <div class="pu-section-label">Solar Array &amp; Production</div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fSystemSizeKw">System Size (kW DC)</label>
+              <input type="number" id="fSystemSizeKw" step="0.01" min="0.5" value="5.52" data-watch="System Size" />
+            </div>
+            <div class="pu-field">
+              <label for="fPanelCount">Panel Quantity</label>
+              <input type="number" id="fPanelCount" step="1" min="1" value="12" data-watch="Panel Count" />
+            </div>
+          </div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fAnnualProduction">Yr-1 Production (kWh)</label>
+              <input type="number" id="fAnnualProduction" step="100" min="500" value="8400" data-watch="Annual Production" />
+            </div>
+            <div class="pu-field">
+              <label for="fDegradation">Degradation (%/yr)</label>
+              <input type="number" id="fDegradation" step="0.05" min="0" max="2" value="0.50" data-watch="Degradation" />
+            </div>
+          </div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fTermYears">Agreement Term</label>
+              <select id="fTermYears" data-watch="Term Years">
+                <option value="25" selected>25 Years</option>
+                <option value="30">30 Years</option>
+              </select>
+            </div>
+            <div class="pu-field">
+              <label for="fExportCreditRate">Export Credit ($/kWh)</label>
+              <input type="number" id="fExportCreditRate" step="0.01" min="0" value="0.08" data-watch="Export Credit" />
+            </div>
+          </div>
+
+          <div class="pu-section-label">Battery Storage &amp; Rule Tracking</div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fBatteryCount">Battery Quantity</label>
+              <input type="number" id="fBatteryCount" min="0" max="8" value="1" data-watch="Battery Quantity" />
+            </div>
+            <div class="pu-field">
+              <label for="fBatteryMode">Operating Mode</label>
+              <select id="fBatteryMode" data-watch="Battery Mode">
+                <option value="Self-Consumption" selected>Self-Consumption</option>
+                <option value="Savings">Savings</option>
+                <option value="Full Backup">Full Backup</option>
+              </select>
+            </div>
+          </div>
+          <p class="pu-help" id="puBatteryRuleHint" style="margin-bottom:10px; font-weight:600; color:var(--pu-gold-dark);"></p>
+
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fSoldDate">Sold Date</label>
+              <input type="date" id="fSoldDate" value="2026-11-16" />
+            </div>
+            <div class="pu-field">
+              <label for="fGrandfathered">Grandfathered?</label>
+              <select id="fGrandfathered">
+                <option value="No" selected>No (Production Rule)</option>
+                <option value="Yes">Yes (Override)</option>
+              </select>
+            </div>
+          </div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fJobStatus">Job Status</label>
+              <select id="fJobStatus">
+                <option value="New">New Job</option>
+                <option value="In-Flight">In-Flight</option>
+              </select>
+            </div>
+            <div class="pu-field">
+              <label for="fRuleVersion">Rule Version</label>
+              <input type="text" id="fRuleVersion" value="2026-Tier-v1 (Date TBD)" />
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: OFFER STRUCTURE -->
+        <div class="pu-tab-panel" id="tab-offer" role="tabpanel">
+          <div class="pu-section-label">Program &amp; Monthly Payment</div>
+          <div class="pu-field">
+            <label for="fOfferType">Customer Offer Type</label>
+            <select id="fOfferType" data-watch="Offer Type">
+              <option value="propel" selected>Propel — Path to Ownership (Fixed)</option>
+              <option value="cea">Clean Energy Agreement (PPA-Style)</option>
+            </select>
+          </div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fMonthlySolarPayment">Monthly Payment ($)</label>
+              <input type="number" id="fMonthlySolarPayment" step="0.01" min="0" value="175.00" data-watch="Monthly Solar Payment" />
+            </div>
+            <div class="pu-field">
+              <label for="fDownPayment">Down Payment ($)</label>
+              <input type="number" id="fDownPayment" step="1" min="0" value="0" data-watch="Down Payment" />
+            </div>
+          </div>
+
+          <!-- PROPEL FIELDS -->
+          <div id="puPropelFields">
+            <div class="pu-section-label">Propel Equipment &amp; Early Payoff</div>
+            <div class="pu-field">
+              <label for="fPropelTitleLabel">Customer Heading</label>
+              <select id="fPropelTitleLabel" data-watch="Propel Heading">
+                <option value="Propel — Path to Ownership" selected>Propel — Path to Ownership</option>
+                <option value="Propel Fixed-Payment Energy Agreement">Propel Fixed-Payment Energy Agreement</option>
+              </select>
+            </div>
+            <div class="pu-field">
+              <label for="fPropelPanels">Panels</label>
+              <input type="text" id="fPropelPanels" value="REC 460 W Alpha Pure-RX" data-watch="Panels" />
+            </div>
+            <div class="pu-field">
+              <label for="fPropelInverter">Microinverters (Propel Only)</label>
+              <input type="text" id="fPropelInverter" value="Enphase IQ8X Microinverters" data-watch="Microinverters" />
+            </div>
+            <div class="pu-field">
+              <label for="fPropelBattery">Battery &amp; Controls</label>
+              <input type="text" id="fPropelBattery" value="Enphase IQ Battery 10C + Enphase IQ Meter Collar" data-watch="Battery &amp; Controls" />
+            </div>
+
+            <div class="pu-form-2col">
+              <div class="pu-field">
+                <label for="fPayoffQuote">Official Payoff Quote ($)</label>
+                <input type="number" id="fPayoffQuote" step="1" min="0" value="24500" data-watch="Payoff Quote" />
+              </div>
+              <div class="pu-field">
+                <label for="fPayoffAccruedInt">Accrued Interest ($)</label>
+                <input type="number" id="fPayoffAccruedInt" step="1" min="0" value="0" data-watch="Accrued Interest" />
+              </div>
+            </div>
+            <div class="pu-form-2col">
+              <div class="pu-field">
+                <label for="fPayoffFees">Nonrefundable Fees ($)</label>
+                <input type="number" id="fPayoffFees" step="1" min="0" value="250" data-watch="Nonrefundable Fees" />
+              </div>
+              <div class="pu-field">
+                <label for="fExtraPrincipalExample">Extra Principal Ex. ($/mo)</label>
+                <input type="number" id="fExtraPrincipalExample" step="10" min="0" value="100" data-watch="Extra Principal" />
+              </div>
+            </div>
+            <label class="pu-check-row">
+              <input type="checkbox" id="fShowEarlyPayoff" checked data-watch="Early Payoff Section" />
+              Show Early-Payoff Comparison vs. Utility
+            </label>
+          </div>
+
+          <!-- CLEAN ENERGY AGREEMENT FIELDS -->
+          <div id="puCeaFields" style="display:none;">
+            <div class="pu-section-label">Clean Energy Agreement Details</div>
+            <div class="pu-form-2col">
+              <div class="pu-field">
+                <label for="fCeaPartner">Partner (Internal)</label>
+                <select id="fCeaPartner" data-watch="CEA Partner">
+                  <option value="GoodLeap">GoodLeap</option>
+                  <option value="EnFin">EnFin</option>
+                  <option value="Sunrun">Sunrun</option>
+                </select>
+              </div>
+              <div class="pu-field">
+                <label for="fCeaRatePerKwh">Starting Rate ($/kWh)</label>
+                <input type="number" id="fCeaRatePerKwh" step="0.001" min="0.001" value="0.250" data-watch="CEA Rate" />
+              </div>
+            </div>
+            <div style="margin-bottom:8px;">
+              <button type="button" class="pu-btn pu-btn-light" id="btnAutoCalcCeaMonthly" style="font-size:11.5px; padding:4px 8px; min-height:28px;">
+                ⚡ Calculate Monthly Payment from Production × Rate
+              </button>
+            </div>
+            <div class="pu-form-2col">
+              <div class="pu-field">
+                <label for="fCeaEscalatorOn">Escalator</label>
+                <select id="fCeaEscalatorOn" data-watch="Escalator Toggle">
+                  <option value="off" selected>Off (0% Flat)</option>
+                  <option value="on">On (Annual %)</option>
+                </select>
+              </div>
+              <div class="pu-field">
+                <label for="fCeaEscalatorPct">Escalator %</label>
+                <input type="number" id="fCeaEscalatorPct" step="0.1" min="0" max="10" value="2.9" data-watch="Escalator %" />
+              </div>
+            </div>
+            <div class="pu-field">
+              <label for="fCeaBatteryPayment">Separate Battery Payment ($/mo)</label>
+              <input type="number" id="fCeaBatteryPayment" step="0.01" min="0" value="0" data-watch="Separate Battery Payment" />
+            </div>
+            <div class="pu-field">
+              <label for="fCeaEquipPreset">Approved Equipment Preset</label>
+              <select id="fCeaEquipPreset" data-watch="Equipment Preset">
+                <option value="Qcells Modules/Inverter + Qcells Q.HOME Gen3">Qcells Modules/Inverter + Q.HOME Gen3</option>
+                <option value="Qcells Modules/Inverter + Tesla Powerwall 3">Qcells Modules/Inverter + Tesla Powerwall 3</option>
+                <option value="Custom Approved Package">Custom Approved Package</option>
+              </select>
+            </div>
+            <div class="pu-field">
+              <label for="fCeaCustomEquip">Customer Equipment Description</label>
+              <input type="text" id="fCeaCustomEquip" value="Qcells Domestic-Content Solar Modules &amp; Inverter with Qcells Q.HOME Gen3 Storage" data-watch="Equipment Description" />
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: SOLAR INSURE & SCREENSHOTS -->
+        <div class="pu-tab-panel" id="tab-protect" role="tabpanel">
+          <div class="pu-section-label">Solar Insure Protection (Daybreak Gated)</div>
+          <label class="pu-check-row">
+            <input type="checkbox" id="fSiConfirmed" checked data-watch="Solar Insure Confirmation" />
+            Daybreak Enrollment Confirmed (Enables SI-30 section)
+          </label>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fSiPlan">Confirmed Plan</label>
+              <select id="fSiPlan" data-watch="Solar Insure Plan">
+                <option value="SI-30 Total" selected>SI-30 Total (Solar + Battery)</option>
+                <option value="SI-30 Solar">SI-30 Solar (Solar Only)</option>
+              </select>
+            </div>
+            <div class="pu-field">
+              <label for="fSiCertId">Certificate / Enrollment ID</label>
+              <input type="text" id="fSiCertId" value="Pending-Daybreak-ID" data-watch="Certificate ID" />
+            </div>
+          </div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fSiStartDate">Coverage Start</label>
+              <input type="date" id="fSiStartDate" value="2026-11-16" />
+            </div>
+            <div class="pu-field">
+              <label for="fSiMonitoring">Monitoring Status</label>
+              <select id="fSiMonitoring">
+                <option value="Confirmed" selected>Confirmed Active</option>
+                <option value="Pending Activation">Pending Activation</option>
+              </select>
+            </div>
+          </div>
+          <div class="pu-form-2col">
+            <div class="pu-field">
+              <label for="fSiRoofWaiver">Roof Waiver</label>
+              <select id="fSiRoofWaiver">
+                <option value="None / Standard Coverage" selected>Standard 3-In Penetration</option>
+                <option value="Roof Waiver Active">Roof Waiver Active</option>
+              </select>
+            </div>
+            <div class="pu-field">
+              <label for="fSiTermsUrl">Master Terms URL</label>
+              <input type="url" id="fSiTermsUrl" value="https://www.solarinsure.com/warranties" />
+            </div>
+          </div>
+
+          <div class="pu-section-label">Proposal Screenshots (Auto-Compressed)</div>
+          <div class="pu-field">
+            <label for="fShotUpload">Add Images &amp; Assign to Report Section</label>
+            <input type="file" id="fShotUpload" accept="image/*" multiple />
+          </div>
+          <div class="pu-shot-grid" id="puShotList"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT PANE: LIVE CUSTOMER-FACING EXECUTIVE DOCUMENT -->
+    <main class="pu-preview-pane">
+      <div class="pu-doc-sheet">
+        <!-- Live Preview Control Strip -->
+        <div class="pu-live-bar no-print">
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <strong style="font-size:13px;" id="puPreviewBarLabel">Live Customer Preview</strong>
+            <span class="pu-change-toast" id="puChangeToast">Synced • Ready</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <label style="font-size:12px; font-weight:700; color:var(--pu-slate);">Utility Scenario:
+              <select id="fPreviewScenarioSync" style="padding:5px 8px; border-radius:6px; border:1px solid #d1d5db; font-weight:600;"></select>
+            </label>
+            <button type="button" class="pu-btn pu-btn-light" onclick="window.print()" title="Print or save as PDF">🖨 Print / PDF</button>
+          </div>
+        </div>
+
+        <!-- Export & Email Drawer -->
+        <div id="puExportResultBox" class="pu-doc-card no-print" style="display:none; border:2px solid var(--pu-green); background:var(--pu-green-soft);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <strong style="font-size:15px; color:var(--pu-green);">✓ Locked Customer Report &amp; Backup Downloaded</strong>
+            <button type="button" class="pu-btn pu-btn-light" onclick="document.getElementById('puExportResultBox').style.display='none'">Close</button>
+          </div>
+          <p class="pu-help" id="puExportFilenames" style="margin:6px 0 8px; color:#14532d; font-weight:600;"></p>
+          <textarea id="puEmailSummaryText" rows="5" readonly style="width:100%; font-size:12px; padding:8px; border-radius:8px; border:1px solid #bbf7d0; background:#fff;"></textarea>
+          <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
+            <button type="button" class="pu-btn pu-btn-green" id="btnOpenMailto">✉ Open Email Draft (mailto:)</button>
+            <button type="button" class="pu-btn pu-btn-light" id="btnCopySummary">📋 Copy Email Summary</button>
+          </div>
+        </div>
+
+        <!-- THE LIVE CUSTOMER DOCUMENT ITSELF -->
+        <div id="puCustomerDocCanvas"></div>
+
+        <!-- POST-PRESENTATION ACTION BAR -->
+        <div class="pu-present-footer pu-present-only no-print">
+          <div>
+            <strong style="font-size:16px; display:block;">Ready to Send This Proposal?</strong>
+            <span style="font-size:13px; color:#d1d5db;">Download the locked interactive report for your customer and open a ready-to-send email draft, or make quick edits first.</span>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button type="button" class="pu-btn" id="btnFooterRevise">✎ Revise Proposal</button>
+            <button type="button" class="pu-btn pu-btn-gold" id="btnFooterEmailProposal">✉ Email Proposal to Customer</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+/* ============================================================================
+   DETERMINISTIC CALCULATION ENGINE
+   ============================================================================ */
+window.PowerUpCalcEngine = (function () {
+  "use strict";
+
+  const UTILITY_PRESETS = {
+    PGE: { code: "PGE", label: "PG&E", defaultRate: 0.42 },
+    SCE: { code: "SCE", label: "Southern California Edison", defaultRate: 0.37 },
+    IID: { code: "IID", label: "IID", defaultRate: 0.24 },
+    Custom: { code: "Custom", label: "Custom Utility", defaultRate: 0.35 }
+  };
+
+  function round2(n) { return Math.round((Number(n) + Number.EPSILON) * 100) / 100; }
+  function round3(n) { return Math.round((Number(n) + Number.EPSILON) * 1000) / 1000; }
+
+  function getRecommendedBatteryCount(annualProductionKwh) {
+    const prod = Math.max(0, Number(annualProductionKwh) || 0);
+    if (prod <= 11000) return 1;
+    if (prod <= 20000) return 2;
+    if (prod <= 30000) return 3;
+    return 4;
+  }
+
+  function buildEscalationSchedule(scenarioKey, customRatesArray, termYears) {
+    const years = Number(termYears) === 30 ? 30 : 25;
+    const schedule = [0];
+    for (let y = 1; y < years; y++) {
+      if (scenarioKey === "custom") {
+        const rate = Array.isArray(customRatesArray) && customRatesArray[y] !== undefined
+          ? Number(customRatesArray[y])
+          : 4.5;
+        schedule.push(rate);
+      } else {
+        schedule.push(Number(scenarioKey) || 0);
+      }
+    }
+    return schedule;
+  }
+
+  function calculateProposal(state, scenarioKeyOverride) {
+    const termYears = Number(state.termYears) === 30 ? 30 : 25;
+    const scenarioKey = scenarioKeyOverride !== undefined ? String(scenarioKeyOverride) : String(state.activeScenario || "9.4");
+
+    const consumption = Math.max(1, Number(state.annualConsumption) || 8200);
+    const baseProduction = Math.max(0, Number(state.annualProduction) || 8400);
+    const degradationPct = (state.degradation !== undefined && !isNaN(state.degradation))
+      ? Math.max(0, Number(state.degradation)) / 100
+      : 0.005;
+    const baseUtilityRate = Math.max(0.001, Number(state.utilityRate) || 0.42);
+
+    const energyOffsetPct = round2((baseProduction / consumption) * 100);
+
+    const currentMonthlyBill = Number(state.currentMonthlyBill) > 0
+      ? Number(state.currentMonthlyBill)
+      : round2((consumption * baseUtilityRate) / 12);
+    const currentAnnualBill = round2(currentMonthlyBill * 12);
+
+    const yr1UtilityEquivAnnual = round2(baseProduction * baseUtilityRate);
+    const yr1UtilityEquivMonthly = round2(yr1UtilityEquivAnnual / 12);
+
+    const selfConsumedKwhYr1 = Math.min(consumption, baseProduction);
+    const excessExportKwhYr1 = Math.max(0, baseProduction - consumption);
+
+    const yr1SolarMonthly = round2(
+      (Number(state.monthlySolarPayment) || 0) +
+      (state.offerType === "cea" ? (Number(state.ceaBatteryPayment) || 0) : 0)
+    );
+    const yr1SolarRatePerKwh = state.offerType === "propel"
+      ? (baseProduction > 0 ? round3((yr1SolarMonthly * 12) / baseProduction) : 0)
+      : round3(Number(state.ceaRatePerKwh) || 0);
+
+    const yr1RemainingUtilMonthly = round2(Number(state.remainingUtilityMonthly) || 0);
+    const yr1TrueUpReserveMonthly = round2(Number(state.trueUpReserveMonthly) || 0);
+    const yr1CombinedMonthly = round2(yr1SolarMonthly + yr1RemainingUtilMonthly + yr1TrueUpReserveMonthly);
+    const yr1StartingSavingsMonthly = round2(currentMonthlyBill - yr1CombinedMonthly);
+
+    const billOffsetPct = currentMonthlyBill > 0
+      ? round2(((currentMonthlyBill - (yr1RemainingUtilMonthly + yr1TrueUpReserveMonthly)) / currentMonthlyBill) * 100)
+      : 0;
+
+    const escalationSchedule = buildEscalationSchedule(scenarioKey, state.customYearRates, termYears);
+    const rows = [];
+    let currentUtilRate = baseUtilityRate;
+    let cumulativeSavings = -(Number(state.downPayment) || 0);
+    let cumulativeNetSavings = -(Number(state.downPayment) || 0);
+    let lifetimeUtilityCost = 0;
+    let lifetimeSolarCost = Number(state.downPayment) || 0;
+    let lifetimeCombinedCost = Number(state.downPayment) || 0;
+    let lifetimeProductionKwh = 0;
+
+    for (let yr = 1; yr <= termYears; yr++) {
+      if (yr > 1) {
+        currentUtilRate = currentUtilRate * (1 + (escalationSchedule[yr - 1] / 100));
+      }
+
+      const prodKwh = baseProduction * Math.pow(1 - degradationPct, yr - 1);
+      lifetimeProductionKwh += prodKwh;
+
+      const rateMultiplier = currentUtilRate / baseUtilityRate;
+      const utilAnnual = round2(currentAnnualBill * rateMultiplier);
+      const utilMonthly = round2(utilAnnual / 12);
+
+      let solarMonthly = 0;
+      let solarRatePerKwh = 0;
+      if (state.offerType === "propel") {
+        solarMonthly = round2(Number(state.monthlySolarPayment) || 0);
+        solarRatePerKwh = prodKwh > 0 ? round3((solarMonthly * 12) / prodKwh) : 0;
+      } else {
+        const escOn = state.ceaEscalatorOn === "on";
+        const escRate = escOn ? (Math.max(0, Number(state.ceaEscalatorPct) || 0) / 100) : 0;
+        const baseCeaMonthly = (Number(state.monthlySolarPayment) || 0) + (Number(state.ceaBatteryPayment) || 0);
+        solarMonthly = round2(baseCeaMonthly * Math.pow(1 + escRate, yr - 1));
+        const startRate = Number(state.ceaRatePerKwh) || 0;
+        solarRatePerKwh = round3(startRate * Math.pow(1 + escRate, yr - 1));
+      }
+      const solarAnnual = round2(solarMonthly * 12);
+
+      const remUtilAnnual = round2((yr1RemainingUtilMonthly * 12) * rateMultiplier);
+      const trueUpAnnual = round2((yr1TrueUpReserveMonthly * 12) * rateMultiplier);
+      const combinedAnnual = round2(solarAnnual + remUtilAnnual + trueUpAnnual);
+      const combinedMonthly = round2(combinedAnnual / 12);
+
+      const directSolarVsUtilAnnual = round2(utilAnnual - solarAnnual);
+      const annualSavings = round2(utilAnnual - combinedAnnual);
+      cumulativeSavings = round2(cumulativeSavings + directSolarVsUtilAnnual);
+      cumulativeNetSavings = round2(cumulativeNetSavings + annualSavings);
+
+      lifetimeUtilityCost = round2(lifetimeUtilityCost + utilAnnual);
+      lifetimeSolarCost = round2(lifetimeSolarCost + solarAnnual);
+      lifetimeCombinedCost = round2(lifetimeCombinedCost + combinedAnnual);
+
+      rows.push({
+        year: yr,
+        utilityRate: round3(currentUtilRate),
+        utilityMonthly: utilMonthly,
+        utilityAnnual: utilAnnual,
+        productionKwh: Math.round(prodKwh),
+        solarRatePerKwh: solarRatePerKwh,
+        solarMonthly: solarMonthly,
+        solarAnnual: solarAnnual,
+        combinedMonthly: combinedMonthly,
+        combinedAnnual: combinedAnnual,
+        directSolarVsUtilAnnual: directSolarVsUtilAnnual,
+        annualSavings: annualSavings,
+        cumulativeSavings: cumulativeSavings,
+        cumulativeNetSavings: cumulativeNetSavings
+      });
+    }
+
+    const milestoneYears = termYears === 30 ? [5, 10, 15, 20, 25, 30] : [5, 10, 15, 20, 25];
+    const milestones = milestoneYears.map(y => {
+      const r = rows[y - 1];
+      return {
+        year: y,
+        cumulativeSavings: r ? r.cumulativeSavings : 0,
+        cumulativeNetSavings: r ? r.cumulativeNetSavings : 0
+      };
+    });
+
+    const effectiveSolarCostPerKwh = lifetimeProductionKwh > 0
+      ? round3(lifetimeSolarCost / lifetimeProductionKwh)
+      : 0;
+
+    const downPayment = Number(state.downPayment) || 0;
+    const payoffQuote = Number(state.payoffQuote) || 0;
+    const accruedInterest = Number(state.payoffAccruedInt) || 0;
+    const nonrefundableFees = Number(state.payoffFees) || 0;
+    const allInEarlyPayoffCost = round2(downPayment + payoffQuote + accruedInterest + nonrefundableFees);
+    const earlyPayoffEffectiveRate = lifetimeProductionKwh > 0
+      ? round3(allInEarlyPayoffCost / lifetimeProductionKwh)
+      : 0;
+    const earlyPayoffVsAgreementSavings = round2(lifetimeSolarCost - allInEarlyPayoffCost);
+
+    const lastRow = rows[rows.length - 1] || { utilityRate: baseUtilityRate, utilityMonthly: currentMonthlyBill };
+
+    return {
+      scenarioKey,
+      termYears,
+      energyOffsetPct,
+      billOffsetPct,
+      currentMonthlyBill,
+      currentAnnualBill,
+      baseUtilityRate,
+      endUtilityRate: lastRow.utilityRate,
+      endUtilityMonthly: lastRow.utilityMonthly,
+      yr1SolarMonthly,
+      yr1SolarRatePerKwh,
+      yr1UtilityEquivMonthly,
+      selfConsumedKwhYr1,
+      excessExportKwhYr1,
+      yr1Budget: {
+        solarMonthly: yr1SolarMonthly,
+        remainingUtilityMonthly: yr1RemainingUtilMonthly,
+        trueUpReserveMonthly: yr1TrueUpReserveMonthly,
+        combinedMonthly: yr1CombinedMonthly,
+        currentUtilityMonthly: currentMonthlyBill,
+        startingSavingsMonthly: yr1StartingSavingsMonthly
+      },
+      recommendedBatteries: getRecommendedBatteryCount(baseProduction),
+      lifetimeUtilityCost,
+      lifetimeSolarCost,
+      lifetimeCombinedCost,
+      lifetimeNetSavings: round2(lifetimeUtilityCost - lifetimeCombinedCost),
+      lifetimeDirectSolarSavings: round2(lifetimeUtilityCost - lifetimeSolarCost),
+      lifetimeProductionKwh: Math.round(lifetimeProductionKwh),
+      effectiveSolarCostPerKwh,
+      earlyPayoff: {
+        allInCost: allInEarlyPayoffCost,
+        effectiveRatePerKwh: earlyPayoffEffectiveRate,
+        savingsVsFullTermPayments: earlyPayoffVsAgreementSavings
+      },
+      milestones,
+      rows
+    };
+  }
+
+  return { UTILITY_PRESETS, getRecommendedBatteryCount, buildEscalationSchedule, calculateProposal };
+})();
+
+/* ============================================================================
+   UI CONTROLLER & SIDE-BY-SIDE HOMEOWNER DOCUMENT RENDERER
+   ============================================================================ */
+(function () {
+  "use strict";
+
+  const Engine = window.PowerUpCalcEngine;
+  const LOCAL_STORAGE_KEY = "power_up_mvp_studio_v6";
+
+  const SHOT_SECTIONS = [
+    { value: "design", label: "Solar Design" },
+    { value: "production", label: "Production & Usage" },
+    { value: "utility", label: "Utility Costs" },
+    { value: "battery", label: "Battery / Storage" },
+    { value: "financing", label: "Agreement / Payoff" },
+    { value: "supporting", label: "Supporting Docs" },
+    { value: "internal", label: "Internal Only (Hidden)" }
+  ];
+
+  let appState = {
+    customerName: "Jordan & Taylor Rivera",
+    customerEmail: "rivera.home@example.com",
+    customerAddress: "1420 Suncrest Way, Riverside, CA",
+    reportVersion: "V1",
+    reportStatus: "Draft",
+    repName: "Alex Morgan",
+    repEmail: "alex@powerupsolutions.example.com",
+    repPhone: "(555) 234-8890",
+    logoDataUrl: "",
+    utilityProvider: "PGE",
+    utilityRate: 0.42,
+    annualConsumption: 8200,
+    currentMonthlyBill: 287,
+    remainingUtilityMonthly: 18,
+    trueUpReserveMonthly: 12,
+    trueUpLowMonthly: 8,
+    trueUpHighMonthly: 24,
+    approvedScenarios: ["0", "3.4", "6", "9.4", "custom"],
+    activeScenario: "9.4",
+    customFirstYear: 8.0,
+    customRangeEnd: 3,
+    customLaterYears: 4.5,
+    customYearRates: Array.from({ length: 30 }, (_, i) => (i === 0 ? 0 : i < 3 ? 8.0 : 4.5)),
+    systemSizeKw: 5.52,
+    panelCount: 12,
+    annualProduction: 8400,
+    degradation: 0.50,
+    termYears: 25,
+    exportCreditRate: 0.08,
+    soldDate: "2026-11-16",
+    jobStatus: "New",
+    ruleVersion: "2026-Tier-v1 (Date TBD)",
+    grandfathered: "No",
+    batteryCount: 1,
+    batteryMode: "Self-Consumption",
+    offerType: "propel",
+    monthlySolarPayment: 175.0,
+    downPayment: 0,
+    propelTitleLabel: "Propel — Path to Ownership",
+    propelPanels: "REC 460 W Alpha Pure-RX",
+    propelInverter: "Enphase IQ8X Microinverters",
+    propelBattery: "Enphase IQ Battery 10C + Enphase IQ Meter Collar",
+    payoffQuote: 24500,
+    payoffAccruedInt: 0,
+    payoffFees: 250,
+    extraPrincipalExample: 100,
+    showEarlyPayoff: true,
+    ceaPartner: "GoodLeap",
+    ceaRatePerKwh: 0.250,
+    ceaEscalatorOn: "off",
+    ceaEscalatorPct: 2.9,
+    ceaBatteryPayment: 0,
+    ceaEquipPreset: "Qcells Modules/Inverter + Qcells Q.HOME Gen3",
+    ceaCustomEquip: "Qcells Domestic-Content Solar Modules & Inverter with Qcells Q.HOME Gen3 Storage",
+    siConfirmed: true,
+    siPlan: "SI-30 Total",
+    siCertId: "Pending-Daybreak-ID",
+    siStartDate: "2026-11-16",
+    siTermsUrl: "https://www.solarinsure.com/warranties",
+    siRoofWaiver: "None / Standard Coverage",
+    siMonitoring: "Confirmed",
+    screenshots: []
+  };
+
+  function fmtMoney(n) {
+    const val = Number(n) || 0;
+    return (val < 0 ? "-$" : "$") + Math.abs(Math.round(val)).toLocaleString("en-US");
+  }
+
+  function fmtMoney2(n) {
+    const val = Number(n) || 0;
+    return (val < 0 ? "-$" : "$") + Math.abs(val).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function fmtCentsOrDollar(ratePerKwh) {
+    const r = Number(ratePerKwh) || 0;
+    return r < 1 ? `${Math.round(r * 100)}¢` : `$${r.toFixed(2)}`;
+  }
+
+  function fmtCentsExact(ratePerKwh) {
+    const r = Number(ratePerKwh) || 0;
+    return r < 1 ? `${(r * 100).toFixed(1)}¢` : `$${r.toFixed(2)}`;
+  }
+
+  function escHtml(str) {
+    return String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function scenarioLabel(key) {
+    if (key === "0") return "0% / yr (Flat Rate)";
+    if (key === "custom") return "Custom Schedule";
+    return `${key}% / yr Utility Increase`;
+  }
+
+  function utilityGrowthBadgeText(key) {
+    if (key === "0") return "Goes up 0% annually";
+    if (key === "custom") return "Goes up per custom schedule";
+    return `Goes up ${key}% annually`;
+  }
+
+  function getLogoSvg(heightPx) {
+    if (appState.logoDataUrl) {
+      return `<img src="${appState.logoDataUrl}" alt="Power Up Solutions" style="height:${heightPx}px; width:auto; max-width:260px; object-fit:contain;" />`;
+    }
+    const w = Math.round(heightPx * (260 / 52));
+    return `
+      <svg width="${w}" height="${heightPx}" viewBox="0 0 260 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Power Up Solutions">
+        <path d="M26 6C13.85 6 4 15.85 4 28V47H12.5V37.8C16.2 40.4 20.9 42 26 42C38.15 42 48 32.15 48 20C48 12.27 38.15 6 26 6ZM26 33.8C18.38 33.8 12.2 27.62 12.2 20C12.2 12.38 18.38 6.2 26 6.2C33.62 6.2 39.8 12.38 39.8 20C39.8 27.62 33.62 33.8 26 33.8Z" fill="#FFFFFF"/>
+        <path d="M26 12.5V21" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M20.6 15.6C18.9 17 17.8 19.1 17.8 21.5C17.8 26 21.5 29.7 26 29.7C30.5 29.7 34.2 26 34.2 21.5C34.2 19.1 33.1 17 31.4 15.6" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round"/>
+        <text x="60" y="23" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="18.5" letter-spacing="1.2">POWER UP</text>
+        <text x="60" y="43" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="18.5" letter-spacing="1.2">SOLUTIONS</text>
+      </svg>
+    `;
+  }
+
+  function renderShotsForSection(secKey) {
+    const matches = appState.screenshots.filter(s => s.section === secKey);
+    if (!matches.length) return "";
+    return matches.map(s => `
+      <figure style="margin:14px 0 0;">
+        <img src="${s.dataUrl}" alt="${escHtml(s.caption || s.name)}" class="pu-doc-photo" />
+        ${s.caption ? `<figcaption class="pu-help" style="margin-top:5px;"><strong>${escHtml(s.caption)}</strong></figcaption>` : ""}
+      </figure>
+    `).join("");
+  }
+
+  /**
+   * Builds the clean, side-by-side Solar vs. Your Utility homeowner report.
+   */
+  function buildCustomerReportHtml(calc, dateStr) {
+    const isPropel = appState.offerType === "propel";
+    const offerHeading = isPropel ? appState.propelTitleLabel : "Clean Energy Agreement";
+
+    const solarHeaderLabel = isPropel
+      ? "SOLAR — FIXED"
+      : (appState.ceaEscalatorOn === "on" ? `CLEAN ENERGY — +${appState.ceaEscalatorPct}%/YR` : "CLEAN ENERGY — FIXED");
+
+    const solarGrowthText = isPropel
+      ? "Goes up 0% annually"
+      : (appState.ceaEscalatorOn === "on" ? `Goes up ${appState.ceaEscalatorPct}% annually` : "Goes up 0% annually");
+
+    const utilGrowthText = utilityGrowthBadgeText(calc.scenarioKey);
+
+    const heroSolarRate = fmtCentsOrDollar(calc.yr1SolarRatePerKwh);
+    const heroSolarMo = fmtMoney(calc.yr1SolarMonthly);
+    const heroUtilRate = fmtCentsOrDollar(calc.baseUtilityRate);
+    const heroUtilMo = fmtMoney(calc.currentMonthlyBill);
+
+    const targetYears = calc.termYears === 30 ? [1, 2, 3, 4, 5, 10, 15, 20, 25, 30] : [1, 2, 3, 4, 5, 10, 15, 20, 25];
+    const displayRows = calc.rows.filter(r => targetYears.includes(r.year));
+
+    const tableRowsHtml = displayRows.map(r => {
+      const sRate = isPropel ? heroSolarRate : fmtCentsOrDollar(r.solarRatePerKwh);
+      const sMo = fmtMoney(r.solarMonthly);
+      const uRate = fmtCentsOrDollar(r.utilityRate);
+      const uMo = fmtMoney(r.utilityMonthly);
+      const annSave = fmtMoney(r.directSolarVsUtilAnnual);
+
+      return `
+        <tr>
+          <td class="c-yr">${r.year}</td>
+          <td class="c-sol">${sRate} / ${sMo}</td>
+          <td class="c-utl">${uRate} / ${uMo}</td>
+          <td class="c-sav">${annSave}</td>
+        </tr>
+      `;
+    }).join("");
+
+    const cumItemsHtml = calc.milestones.map(m => `
+      <div>
+        <div class="pu-cum-yr">Year ${m.year}</div>
+        <div class="pu-cum-val">${fmtMoney(m.cumulativeSavings)}</div>
+      </div>
+    `).join("");
+
+    return `
+      <!-- BRANDED HEADER CARD -->
+      <div class="pu-doc-header" data-block="header">
+        <div>
+          ${getLogoSvg(40)}
+          <div style="margin-top:10px;">
+            <h2>Personalized Energy Report</h2>
+            <p>Prepared for <strong>${escHtml(appState.customerName)}</strong>${appState.customerAddress ? ` • ${escHtml(appState.customerAddress)}` : ""}</p>
+          </div>
+        </div>
+        <div style="text-align:right; font-size:12.5px; color:#d1d5db;">
+          <div style="color:#f3c456; font-weight:700;">Report ${escHtml(appState.reportVersion)} • ${escHtml(dateStr)}</div>
+          <div style="margin-top:4px;">Consultant: <strong>${escHtml(appState.repName)}</strong></div>
+          <div>${escHtml(appState.repEmail)}${appState.repPhone ? ` • ${escHtml(appState.repPhone)}` : ""}</div>
+        </div>
+      </div>
+
+      <!-- HERO SIDE-BY-SIDE SOLAR VS UTILITY COMPARISON -->
+      <div class="pu-hero-card" data-block="hero">
+        <div class="pu-hero-split">
+          <div>
+            <div class="pu-hero-kicker solar">☀️ ${solarHeaderLabel}</div>
+            <div class="pu-hero-figure solar">${heroSolarRate} / ${heroSolarMo}</div>
+            <div class="pu-hero-caption">Rate per kWh / Monthly Payment</div>
+            <span class="pu-hero-rate-badge solar">${solarGrowthText}</span>
+          </div>
+          <div>
+            <div class="pu-hero-kicker util">⚡ YOUR UTILITY — TODAY</div>
+            <div class="pu-hero-figure util">${heroUtilRate} / ${heroUtilMo}</div>
+            <div class="pu-hero-caption">Rate per kWh / Monthly Payment</div>
+            <span class="pu-hero-rate-badge util">${utilGrowthText}</span>
+          </div>
+        </div>
+
+        <table class="pu-comp-table">
+          <thead>
+            <tr>
+              <th class="c-yr">Year</th>
+              <th class="c-sol">☀️ Solar Rate / Mo<br/><span style="font-size:11px; font-weight:500; color:var(--pu-muted);">(${solarGrowthText})</span></th>
+              <th class="c-utl">⚡ Utility Rate / Mo<br/><span style="font-size:11px; font-weight:500; color:var(--pu-muted);">(${utilGrowthText})</span></th>
+              <th class="c-sav">Annual Savings</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRowsHtml}
+          </tbody>
+        </table>
+
+        <div class="pu-cum-panel">
+          <div class="pu-cum-heading">
+            <span>💰 Total Cumulative Savings Over Time</span>
+            <span style="font-size:12px; font-weight:500; color:var(--pu-muted);">${scenarioLabel(calc.scenarioKey)}</span>
+          </div>
+          <div class="pu-cum-grid">
+            ${cumItemsHtml}
+          </div>
+        </div>
+      </div>
+
+      <!-- 1. SIDE-BY-SIDE: YOUR SOLAR PLAN VS. DOING NOTHING -->
+      <section class="pu-doc-card" data-block="offer">
+        <div class="pu-doc-card-head">
+          <h3>${escHtml(offerHeading)} vs. Your Utility</h3>
+          <span class="pu-badge-green">Side-by-Side Comparison</span>
+        </div>
+
+        <div class="pu-vs-grid">
+          <div class="pu-vs-col solar">
+            <div class="pu-vs-tag">
+              <span>☀️ Your Solar Plan</span>
+              <span>${solarGrowthText}</span>
+            </div>
+            <div class="pu-vs-main">${fmtMoney2(calc.yr1SolarMonthly)}/mo</div>
+            <div class="pu-help" style="color:#1e40af; font-weight:600; margin-top:2px;">
+              ${isPropel
+                ? `Effective rate: ${fmtCentsExact(calc.effectiveSolarCostPerKwh)}/kWh • Goes up 0% annually`
+                : `Starts at ${fmtCentsExact(appState.ceaRatePerKwh)}/kWh • ${solarGrowthText}`}
+            </div>
+            <ul class="pu-vs-list">
+              <li><strong>Predictable Payment:</strong> Locked against utility rate spikes.</li>
+              ${isPropel
+                ? `<li><strong>Path to Ownership:</strong> Payments end once paid off—unlike endless utility bills.</li>
+                   <li><strong>3-Year Payment Reset Option:</strong> Make a lump-sum payment in years 1–3 to lower your monthly payment (per contract).</li>`
+                : `<li><strong>${appState.termYears}-Year Rate Protection:</strong> Total projected payments of ${fmtMoney(calc.lifetimeSolarCost)} (${fmtCentsExact(calc.effectiveSolarCostPerKwh)}/kWh effective).</li>`}
+            </ul>
+          </div>
+
+          <div class="pu-vs-col util">
+            <div class="pu-vs-tag">
+              <span>⚡ Your Utility (Doing Nothing)</span>
+              <span>${utilGrowthText}</span>
+            </div>
+            <div class="pu-vs-main" style="color:var(--pu-utility);">${fmtMoney2(calc.currentMonthlyBill)}/mo today</div>
+            <div class="pu-help" style="color:#991b1b; font-weight:600; margin-top:2px;">
+              ${fmtCentsExact(calc.baseUtilityRate)}/kWh today → ${fmtCentsExact(calc.endUtilityRate)}/kWh (${fmtMoney(calc.endUtilityMonthly)}/mo) in Yr ${calc.termYears}
+            </div>
+            <ul class="pu-vs-list">
+              <li><strong>Uncapped Rate Increases:</strong> Exposed to annual rate hikes every year.</li>
+              <li><strong>Endless Payments:</strong> You pay ${fmtMoney(calc.lifetimeUtilityCost)} over ${calc.termYears} years and still own nothing.</li>
+              <li><strong>Zero Outage Protection:</strong> When the grid goes down, your home loses power.</li>
+            </ul>
+          </div>
+        </div>
+
+        ${isPropel && appState.showEarlyPayoff ? `
+          <div style="margin-top:16px; padding-top:14px; border-top:1px solid #f1f3f5;">
+            <strong style="font-size:14.5px; display:block; margin-bottom:6px;">Early-Payoff Option: Own Your Power Outright vs. Endless Utility Bills</strong>
+            <div class="pu-vs-grid">
+              <div class="pu-vs-col green">
+                <div class="pu-vs-tag"><span>✓ Pay Off Solar Early</span><span>Goes up 0%</span></div>
+                <div class="pu-vs-main">${fmtMoney(calc.earlyPayoff.allInCost)} all-in</div>
+                <div class="pu-help" style="color:#166534; font-weight:600; margin-top:2px;">
+                  Drops your power cost to ${fmtCentsExact(calc.earlyPayoff.effectiveRatePerKwh)}/kWh • $0/mo after payoff
+                </div>
+                <p class="pu-help" style="margin:6px 0 0;">
+                  Includes ${fmtMoney(appState.downPayment)} down + ${fmtMoney(appState.payoffQuote)} payoff quote + ${fmtMoney(appState.payoffAccruedInt)} accrued interest + ${fmtMoney(appState.payoffFees)} fees. Adding +${fmtMoney(appState.extraPrincipalExample)}/mo pays it off even faster.
+                </p>
+              </div>
+              <div class="pu-vs-col util">
+                <div class="pu-vs-tag"><span>⚡ Stay With Your Utility</span><span>${utilGrowthText}</span></div>
+                <div class="pu-vs-main" style="color:var(--pu-utility);">${fmtMoney(calc.lifetimeUtilityCost)}</div>
+                <div class="pu-help" style="color:#991b1b; font-weight:600; margin-top:2px;">
+                  ${fmtCentsExact(calc.baseUtilityRate)}/kWh today → ${fmtCentsExact(calc.endUtilityRate)}/kWh in Yr ${calc.termYears}
+                </div>
+                <p class="pu-help" style="margin:6px 0 0;">
+                  Total utility spend over ${calc.termYears} years—with no payoff date and no ownership at the end.
+                </p>
+              </div>
+            </div>
+          </div>
+        ` : ""}
+        ${renderShotsForSection("financing")}
+      </section>
+
+      <!-- 2. YOUR NEW MONTHLY ENERGY BUDGET (SIDE BY SIDE WITH OLD BILL) -->
+      <section class="pu-doc-card" data-block="budget">
+        <div class="pu-doc-card-head">
+          <h3>Your New Monthly Energy Budget</h3>
+          <span style="font-size:12.5px; font-weight:600; color:var(--pu-muted);">Two small statements ≠ paying twice</span>
+        </div>
+
+        <div class="pu-vs-grid">
+          <div class="pu-vs-col green">
+            <div class="pu-vs-tag"><span>☀️ Your New Combined Total</span><span>Year-1 Est.</span></div>
+            <div class="pu-vs-main">${fmtMoney2(calc.yr1Budget.combinedMonthly)}/mo</div>
+            <div class="pu-help" style="color:#166534; font-weight:600; margin-top:2px;">
+              Saves ~${fmtMoney2(calc.yr1Budget.startingSavingsMonthly)}/mo right away
+            </div>
+          </div>
+          <div class="pu-vs-col util">
+            <div class="pu-vs-tag"><span>⚡ What You Pay Your Utility Today</span><span>${utilGrowthText}</span></div>
+            <div class="pu-vs-main" style="color:var(--pu-utility);">${fmtMoney2(calc.yr1Budget.currentUtilityMonthly)}/mo</div>
+            <div class="pu-help" style="color:#991b1b; font-weight:600; margin-top:2px;">
+              At ${fmtCentsExact(calc.baseUtilityRate)}/kWh current rate
+            </div>
+          </div>
+        </div>
+
+        <table class="pu-clean-table" style="margin-top:8px;">
+          <thead><tr><th>How Your New Monthly Total Breaks Down</th><th class="num">Monthly Est.</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1. Fixed Solar Payment</strong> <span class="pu-help">(Goes up 0% annually)</span></td><td class="num">${fmtMoney2(calc.yr1Budget.solarMonthly)}</td></tr>
+            <tr><td><strong>2. Remaining Utility Connection</strong> <span class="pu-help">(Minimum grid fees &amp; evening grid draw)</span></td><td class="num">${fmtMoney2(calc.yr1Budget.remainingUtilityMonthly)}</td></tr>
+            <tr><td><strong>3. Monthly True-Up Buffer</strong> <span class="pu-help">(Suggested set-aside; range ${fmtMoney(appState.trueUpLowMonthly)}–${fmtMoney(appState.trueUpHighMonthly)}/mo)</span></td><td class="num">${fmtMoney2(calc.yr1Budget.trueUpReserveMonthly)}</td></tr>
+            <tr style="font-weight:700; background:#f9fafb;"><td>Combined Post-Solar Monthly Total</td><td class="num">${fmtMoney2(calc.yr1Budget.combinedMonthly)}</td></tr>
+          </tbody>
+        </table>
+
+        <details class="pu-drawer">
+          <summary>How Annual True-Up &amp; Usage Changes Work</summary>
+          <p style="font-size:13.5px; color:var(--pu-slate); margin:8px 0 0;">
+            Once a year, your utility reconciles power pulled from the grid minus solar credits earned, plus standard taxes and fixed charges. Setting aside ~${fmtMoney(appState.trueUpReserveMonthly)}/mo keeps that annual settlement covered. If you add major new electric loads (like an EV), remaining utility charges will rise accordingly.
+          </p>
+        </details>
+      </section>
+
+      <!-- 3. YOUR CUSTOM SOLAR & BATTERY SYSTEM -->
+      <section class="pu-doc-card" data-block="system">
+        <div class="pu-doc-card-head">
+          <h3>Your Custom Solar &amp; Battery System</h3>
+          <span class="pu-badge-green">${calc.energyOffsetPct}% Energy Offset</span>
+        </div>
+        <div class="pu-metric-row">
+          <div class="pu-metric gold">
+            <div class="pu-metric-lbl">System Size</div>
+            <div class="pu-metric-num">${Number(appState.systemSizeKw).toFixed(2)} kW</div>
+            <div class="pu-help">${appState.panelCount} Solar Panels</div>
+          </div>
+          <div class="pu-metric">
+            <div class="pu-metric-lbl">Home Usage</div>
+            <div class="pu-metric-num">${Number(appState.annualConsumption).toLocaleString()} kWh</div>
+            <div class="pu-help">Your annual usage</div>
+          </div>
+          <div class="pu-metric green">
+            <div class="pu-metric-lbl">Solar Production</div>
+            <div class="pu-metric-num">${Number(appState.annualProduction).toLocaleString()} kWh</div>
+            <div class="pu-help">Worth ${fmtMoney(calc.yr1UtilityEquivMonthly)}/mo at utility rates</div>
+          </div>
+          <div class="pu-metric">
+            <div class="pu-metric-lbl">Home Battery</div>
+            <div class="pu-metric-num">${appState.batteryCount} ${appState.batteryCount === 1 ? "Battery" : "Batteries"}</div>
+            <div class="pu-help">Mode: ${escHtml(appState.batteryMode)}</div>
+          </div>
+        </div>
+        <p style="font-size:13.5px; color:var(--pu-slate); margin:0;">
+          Your panels generate <strong>${calc.energyOffsetPct}%</strong> of your annual kWh usage (even above 100% energy offset, small utility grid connection charges still apply). Your battery quantity was sized to match your system’s annual production.
+        </p>
+        ${renderShotsForSection("design")}
+        ${renderShotsForSection("production")}
+        ${renderShotsForSection("utility")}
+
+        <details class="pu-drawer">
+          <summary>How Excess Exported Power Is Valued</summary>
+          <p style="font-size:13.5px; color:var(--pu-slate); margin:8px 0 0;">
+            In Year 1, roughly <strong>${calc.selfConsumedKwhYr1.toLocaleString()} kWh</strong> powers your home directly or charges your battery, while <strong>${calc.excessExportKwhYr1.toLocaleString()} kWh</strong> is exported to the grid (valued conservatively at $${Number(appState.exportCreditRate).toFixed(2)}/kWh rather than full retail).
+          </p>
+        </details>
+      </section>
+
+      <!-- 4. EQUIPMENT & POWER OUTAGE PROTECTION -->
+      <section class="pu-doc-card" data-block="equipment">
+        <div class="pu-doc-card-head">
+          <h3>Equipment &amp; Power Outage Protection</h3>
+        </div>
+        ${isPropel ? `
+          <table class="pu-clean-table">
+            <tbody>
+              <tr><th>Solar Panels</th><td>${escHtml(appState.propelPanels)} (Qty: ${appState.panelCount})</td></tr>
+              <tr><th>Microinverters</th><td>${escHtml(appState.propelInverter)}</td></tr>
+              <tr><th>Battery &amp; Smart Switch</th><td>${escHtml(appState.propelBattery)} (Qty: ${appState.batteryCount})</td></tr>
+            </tbody>
+          </table>
+        ` : `
+          <table class="pu-clean-table">
+            <tbody>
+              <tr><th>System Equipment</th><td>${escHtml(appState.ceaCustomEquip)}</td></tr>
+              <tr><th>Capacity</th><td>${Number(appState.systemSizeKw).toFixed(2)} kW DC (${appState.panelCount} panels) • ${appState.batteryCount} ${appState.batteryCount === 1 ? "Battery" : "Batteries"}</td></tr>
+            </tbody>
+          </table>
+        `}
+
+        <div class="pu-cycle-grid">
+          <div class="pu-cycle-step">
+            <strong>☀️ 1. Daytime Solar</strong>
+            <span>During an outage, your panels power your home directly and recharge your battery.</span>
+          </div>
+          <div class="pu-cycle-step">
+            <strong>🔋 2. Nighttime Battery</strong>
+            <span>After sundown, stored battery power automatically keeps your essentials running.</span>
+          </div>
+          <div class="pu-cycle-step">
+            <strong>🔄 3. Next-Day Recharge</strong>
+            <span>Morning sunlight recharges your battery again to extend multi-day backup.</span>
+          </div>
+        </div>
+        ${renderShotsForSection("battery")}
+
+        <details class="pu-drawer">
+          <summary>Battery Operating Modes &amp; Outage Expectations</summary>
+          <p style="font-size:13.5px; color:var(--pu-slate); margin:8px 0 0;">
+            <strong>Modes:</strong> <em>Self-Consumption</em> uses stored solar after sunset down to your reserve; <em>Savings</em> discharges during peak utility hours; <em>Full Backup</em> holds battery power for outages. Backup duration depends on charge level, weather, and which appliances run simultaneously.
+          </p>
+        </details>
+      </section>
+
+      <!-- 5. 30-YEAR PEACE-OF-MIND PROTECTION -->
+      <section class="pu-doc-card" data-block="protection">
+        <div class="pu-doc-card-head">
+          <h3>30-Year Peace-of-Mind Protection</h3>
+          ${appState.siConfirmed ? `<span class="pu-badge-green">Solar Insure ${escHtml(appState.siPlan)}</span>` : ""}
+        </div>
+
+        ${appState.siConfirmed ? `
+          <div class="pu-benefit-grid">
+            <div class="pu-benefit-tile">
+              <div class="pu-benefit-title">🛡️ $0 Deductible</div>
+              <p class="pu-benefit-desc">$0 out-of-pocket deductible and $0 monthly fees on covered repairs.</p>
+            </div>
+            <div class="pu-benefit-tile">
+              <div class="pu-benefit-title">🔧 30-Year Parts &amp; Labor</div>
+              <p class="pu-benefit-desc">Covers replacement parts, shipping, and labor—even if the original installer closes.</p>
+            </div>
+            <div class="pu-benefit-tile">
+              <div class="pu-benefit-title">🏠 3-Inch Roof Seal</div>
+              <p class="pu-benefit-desc">Covers roof flashing and leaks within 3 inches of any solar mount.</p>
+            </div>
+            ${appState.siPlan === "SI-30 Total" ? `
+              <div class="pu-benefit-tile">
+                <div class="pu-benefit-title">🔋 30-Year Battery Coverage</div>
+                <p class="pu-benefit-desc">Includes one qualifying battery replacement in years 11–30 if capacity falls below 50%.</p>
+              </div>
+            ` : ""}
+            <div class="pu-benefit-tile">
+              <div class="pu-benefit-title">🤝 $0 Home Sale Transfer</div>
+              <p class="pu-benefit-desc">Transfers seamlessly to the next homeowner at $0 fee when you sell your home.</p>
+            </div>
+          </div>
+
+          <details class="pu-drawer">
+            <summary>Enrollment Details &amp; Standard Exclusions</summary>
+            <p style="font-size:13px; color:var(--pu-slate); margin:8px 0 0;">
+              <strong>Enrollment ID:</strong> ${escHtml(appState.siCertId)} • <strong>Start Date:</strong> ${escHtml(appState.siStartDate)} • <strong>Monitoring:</strong> ${escHtml(appState.siMonitoring)}.<br/>
+              Qualifying service calls for covered defects are included (non-defect diagnostic visits excluded). Excludes severe weather, theft, pests, unrelated roof wear, unauthorized work, or disconnected internet monitoring. Full terms: <a href="${escHtml(appState.siTermsUrl)}" target="_blank" rel="noopener">solarinsure.com/warranties</a>.
+            </p>
+          </details>
+        ` : `
+          <p style="font-size:14px; color:var(--pu-slate); margin:0;">
+            Manufacturer hardware warranties apply. Project-specific Solar Insure SI-30 certificate details will be added once confirmed in Daybreak.
+          </p>
+        `}
+
+        <details class="pu-drawer">
+          <summary>Why Utility Rates &amp; Grid Reliability Are Changing (U.S. Dept. of Energy)</summary>
+          <p style="font-size:13px; color:var(--pu-slate); margin:8px 0 0;">
+            “We don’t have a crystal ball. Choose the scenario you consider reasonable—including a scenario where utility rates never increase—and see the result.”<br/><br/>
+            In its grid reliability evaluation, the U.S. Department of Energy (DOE) modeled that outage risk could increase approximately 100-fold by 2030 under a specific scenario involving rising electricity demand and retiring power plants (a conditional modeled risk, not a guarantee). Sources:
+            <a href="https://www.energy.gov/articles/department-energy-releases-report-evaluating-us-grid-reliability-and-security" target="_blank" rel="noopener">DOE Reliability Report</a> •
+            <a href="https://www.energy.gov/powering-americas-ai-future-data-center-resource-hub" target="_blank" rel="noopener">DOE AI/Data Center Hub</a> •
+            <a href="https://www.energy.gov/oe/national-transmission-needs-study" target="_blank" rel="noopener">DOE Transmission Study</a>.
+          </p>
+        </details>
+        ${renderShotsForSection("supporting")}
+      </section>
+    `;
+  }
+
+  function saveLocalDraft() {
+    try { localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState)); } catch (e) {}
+  }
+
+  function loadLocalDraft() {
+    try {
+      const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") appState = { ...appState, ...parsed };
+      }
+    } catch (e) {}
+  }
+
+  function syncFormFromState() {
+    const map = {
+      fCustomerName: "customerName", fCustomerEmail: "customerEmail", fCustomerAddress: "customerAddress",
+      fReportVersion: "reportVersion", fReportStatus: "reportStatus", fRepName: "repName",
+      fRepEmail: "repEmail", fRepPhone: "repPhone", fUtilityProvider: "utilityProvider",
+      fUtilityRate: "utilityRate", fAnnualConsumption: "annualConsumption", fCurrentMonthlyBill: "currentMonthlyBill",
+      fRemainingUtilityMonthly: "remainingUtilityMonthly", fTrueUpReserveMonthly: "trueUpReserveMonthly",
+      fTrueUpLowMonthly: "trueUpLowMonthly", fTrueUpHighMonthly: "trueUpHighMonthly",
+      fActiveScenario: "activeScenario", fCustomFirstYear: "customFirstYear", fCustomRangeEnd: "customRangeEnd",
+      fCustomLaterYears: "customLaterYears", fSystemSizeKw: "systemSizeKw", fPanelCount: "panelCount",
+      fAnnualProduction: "annualProduction", fDegradation: "degradation", fTermYears: "termYears",
+      fExportCreditRate: "exportCreditRate", fSoldDate: "soldDate", fJobStatus: "jobStatus",
+      fRuleVersion: "ruleVersion", fGrandfathered: "grandfathered", fBatteryCount: "batteryCount",
+      fBatteryMode: "batteryMode", fOfferType: "offerType", fMonthlySolarPayment: "monthlySolarPayment",
+      fDownPayment: "downPayment", fPropelTitleLabel: "propelTitleLabel", fPropelPanels: "propelPanels",
+      fPropelInverter: "propelInverter", fPropelBattery: "propelBattery", fPayoffQuote: "payoffQuote",
+      fPayoffAccruedInt: "payoffAccruedInt", fPayoffFees: "payoffFees", fExtraPrincipalExample: "extraPrincipalExample",
+      fCeaPartner: "ceaPartner", fCeaRatePerKwh: "ceaRatePerKwh", fCeaEscalatorOn: "ceaEscalatorOn",
+      fCeaEscalatorPct: "ceaEscalatorPct", fCeaBatteryPayment: "ceaBatteryPayment",
+      fCeaEquipPreset: "ceaEquipPreset", fCeaCustomEquip: "ceaCustomEquip",
+      fSiPlan: "siPlan", fSiCertId: "siCertId", fSiStartDate: "siStartDate",
+      fSiTermsUrl: "siTermsUrl", fSiRoofWaiver: "siRoofWaiver", fSiMonitoring: "siMonitoring"
+    };
+
+    Object.keys(map).forEach(id => {
+      const el = document.getElementById(id);
+      if (el && appState[map[id]] !== undefined) el.value = appState[map[id]];
+    });
+
+    const earlyPayCheck = document.getElementById("fShowEarlyPayoff");
+    if (earlyPayCheck) earlyPayCheck.checked = Boolean(appState.showEarlyPayoff);
+
+    const siCheck = document.getElementById("fSiConfirmed");
+    if (siCheck) siCheck.checked = Boolean(appState.siConfirmed);
+
+    document.querySelectorAll(".scen-approve").forEach(cb => {
+      cb.checked = appState.approvedScenarios.includes(cb.value);
+    });
+
+    const topLogoSlot = document.getElementById("puTopLogoSlot");
+    if (topLogoSlot) topLogoSlot.innerHTML = getLogoSvg(38);
+
+    renderYearByYearInputs();
+    renderScreenshotsList();
+    updateConditionalSections();
+  }
+
+  function readStateFromForm(changedLabel) {
+    appState.customerName = document.getElementById("fCustomerName").value.trim() || "Valued Homeowner";
+    appState.customerEmail = document.getElementById("fCustomerEmail").value.trim();
+    appState.customerAddress = document.getElementById("fCustomerAddress").value.trim();
+    appState.reportVersion = document.getElementById("fReportVersion").value.trim() || "V1";
+    appState.reportStatus = document.getElementById("fReportStatus").value;
+    appState.repName = document.getElementById("fRepName").value.trim() || "Power Up Representative";
+    appState.repEmail = document.getElementById("fRepEmail").value.trim();
+    appState.repPhone = document.getElementById("fRepPhone").value.trim();
+
+    appState.utilityProvider = document.getElementById("fUtilityProvider").value;
+    const utilRateParsed = parseFloat(document.getElementById("fUtilityRate").value);
+    appState.utilityRate = isNaN(utilRateParsed) ? 0.42 : Math.max(0.001, utilRateParsed);
+
+    appState.annualConsumption = parseFloat(document.getElementById("fAnnualConsumption").value) || 8200;
+    appState.currentMonthlyBill = parseFloat(document.getElementById("fCurrentMonthlyBill").value) || 0;
+    appState.remainingUtilityMonthly = parseFloat(document.getElementById("fRemainingUtilityMonthly").value) || 0;
+    appState.trueUpReserveMonthly = parseFloat(document.getElementById("fTrueUpReserveMonthly").value) || 0;
+    appState.trueUpLowMonthly = parseFloat(document.getElementById("fTrueUpLowMonthly").value) || 0;
+    appState.trueUpHighMonthly = parseFloat(document.getElementById("fTrueUpHighMonthly").value) || 0;
+
+    const approved = [];
+    document.querySelectorAll(".scen-approve:checked").forEach(cb => approved.push(cb.value));
+    appState.approvedScenarios = approved.length ? approved : ["0", "9.4"];
+
+    appState.activeScenario = document.getElementById("fActiveScenario").value;
+    appState.customFirstYear = parseFloat(document.getElementById("fCustomFirstYear").value) || 0;
+    appState.customRangeEnd = parseInt(document.getElementById("fCustomRangeEnd").value, 10) || 3;
+    appState.customLaterYears = parseFloat(document.getElementById("fCustomLaterYears").value) || 0;
+
+    appState.systemSizeKw = parseFloat(document.getElementById("fSystemSizeKw").value) || 0;
+    appState.panelCount = parseInt(document.getElementById("fPanelCount").value, 10) || 0;
+    appState.annualProduction = parseFloat(document.getElementById("fAnnualProduction").value) || 0;
+
+    const degParsed = parseFloat(document.getElementById("fDegradation").value);
+    appState.degradation = isNaN(degParsed) ? 0.5 : degParsed;
+
+    appState.termYears = parseInt(document.getElementById("fTermYears").value, 10) || 25;
+    appState.exportCreditRate = parseFloat(document.getElementById("fExportCreditRate").value) || 0.08;
+
+    appState.soldDate = document.getElementById("fSoldDate").value;
+    appState.jobStatus = document.getElementById("fJobStatus").value;
+    appState.ruleVersion = document.getElementById("fRuleVersion").value;
+    appState.grandfathered = document.getElementById("fGrandfathered").value;
+    appState.batteryCount = parseInt(document.getElementById("fBatteryCount").value, 10) || 0;
+    appState.batteryMode = document.getElementById("fBatteryMode").value;
+
+    appState.offerType = document.getElementById("fOfferType").value;
+    appState.monthlySolarPayment = parseFloat(document.getElementById("fMonthlySolarPayment").value) || 0;
+    appState.downPayment = parseFloat(document.getElementById("fDownPayment").value) || 0;
+
+    appState.propelTitleLabel = document.getElementById("fPropelTitleLabel").value;
+    appState.propelPanels = document.getElementById("fPropelPanels").value;
+    appState.propelInverter = document.getElementById("fPropelInverter").value;
+    appState.propelBattery = document.getElementById("fPropelBattery").value;
+    appState.payoffQuote = parseFloat(document.getElementById("fPayoffQuote").value) || 0;
+    appState.payoffAccruedInt = parseFloat(document.getElementById("fPayoffAccruedInt").value) || 0;
+    appState.payoffFees = parseFloat(document.getElementById("fPayoffFees").value) || 0;
+    appState.extraPrincipalExample = parseFloat(document.getElementById("fExtraPrincipalExample").value) || 0;
+    appState.showEarlyPayoff = document.getElementById("fShowEarlyPayoff").checked;
+
+    appState.ceaPartner = document.getElementById("fCeaPartner").value;
+    appState.ceaRatePerKwh = parseFloat(document.getElementById("fCeaRatePerKwh").value) || 0;
+    appState.ceaEscalatorOn = document.getElementById("fCeaEscalatorOn").value;
+    appState.ceaEscalatorPct = parseFloat(document.getElementById("fCeaEscalatorPct").value) || 0;
+    appState.ceaBatteryPayment = parseFloat(document.getElementById("fCeaBatteryPayment").value) || 0;
+    appState.ceaEquipPreset = document.getElementById("fCeaEquipPreset").value;
+    appState.ceaCustomEquip = document.getElementById("fCeaCustomEquip").value;
+
+    appState.siConfirmed = document.getElementById("fSiConfirmed").checked;
+    appState.siPlan = document.getElementById("fSiPlan").value;
+    appState.siCertId = document.getElementById("fSiCertId").value;
+    appState.siStartDate = document.getElementById("fSiStartDate").value;
+    appState.siTermsUrl = document.getElementById("fSiTermsUrl").value;
+    appState.siRoofWaiver = document.getElementById("fSiRoofWaiver").value;
+    appState.siMonitoring = document.getElementById("fSiMonitoring").value;
+
+    updateConditionalSections();
+    refreshCustomerCanvas(changedLabel);
+    saveLocalDraft();
+  }
+
+  function updateConditionalSections() {
+    const isPropel = appState.offerType === "propel";
+    document.getElementById("puPropelFields").style.display = isPropel ? "block" : "none";
+    document.getElementById("puCeaFields").style.display = isPropel ? "none" : "block";
+    document.getElementById("puStatusPill").textContent = appState.reportStatus;
+
+    const recBat = Engine.getRecommendedBatteryCount(appState.annualProduction);
+    const tierDesc = appState.annualProduction <= 11000 ? "0–11,000 kWh"
+      : appState.annualProduction <= 20000 ? "11,001–20,000 kWh"
+      : appState.annualProduction <= 30000 ? "20,001–30,000 kWh"
+      : "Over 30,000 kWh";
+    document.getElementById("puBatteryRuleHint").textContent =
+      `Production sizing rule: ${recBat} ${recBat === 1 ? "battery" : "batteries"} (${tierDesc})`;
+  }
+
+  function renderYearByYearInputs() {
+    const grid = document.getElementById("puYearByYearGrid");
+    grid.innerHTML = "";
+    for (let y = 1; y <= 30; y++) {
+      const wrap = document.createElement("div");
+      wrap.className = "pu-field";
+      const val = y === 1 ? 0 : (appState.customYearRates[y - 1] ?? 4.5);
+      wrap.innerHTML = `
+        <label style="font-size:10.5px;">Yr ${y}</label>
+        <input type="number" step="0.1" value="${val}" ${y === 1 ? "disabled" : ""} style="padding:4px 5px; min-height:28px; font-size:11.5px;" />
+      `;
+      const inp = wrap.querySelector("input");
+      if (y > 1) {
+        inp.addEventListener("change", function () {
+          appState.customYearRates[y - 1] = parseFloat(this.value) || 0;
+          refreshCustomerCanvas("Custom Year " + y);
+          saveLocalDraft();
+        });
+      }
+      grid.appendChild(wrap);
+    }
+  }
+
+  function refreshCustomerCanvas(changedLabel) {
+    const dateStr = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    const calc = Engine.calculateProposal(appState, appState.activeScenario);
+
+    const sel = document.getElementById("fPreviewScenarioSync");
+    sel.innerHTML = appState.approvedScenarios.map(k =>
+      `<option value="${k}" ${k === appState.activeScenario ? "selected" : ""}>${scenarioLabel(k)}</option>`
+    ).join("");
+
+    const canvas = document.getElementById("puCustomerDocCanvas");
+    canvas.innerHTML = buildCustomerReportHtml(calc, dateStr);
+
+    if (changedLabel) {
+      const toast = document.getElementById("puChangeToast");
+      toast.textContent = `Updated: ${changedLabel}`;
+      const hero = canvas.querySelector(".pu-hero-card");
+      if (hero) {
+        hero.classList.remove("pu-flash-updated");
+        void hero.offsetWidth;
+        hero.classList.add("pu-flash-updated");
+      }
+    }
+  }
+
+  /**
+   * Compresses images with full alpha/transparency support for PNG/SVG logos.
+   */
+  function compressImageFile(file, maxWidth, quality, isLogo) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = function (ev) {
+        const isSvg = file.type === "image/svg+xml";
+        if (isSvg) {
+          resolve(ev.target.result);
+          return;
+        }
+
+        const img = new Image();
+        img.onerror = reject;
+        img.onload = function () {
+          let w = img.width, h = img.height;
+          if (w > maxWidth) { h = Math.round((h * maxWidth) / w); w = maxWidth; }
+          const canvas = document.createElement("canvas");
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext("2d");
+
+          if (isLogo || file.type === "image/png") {
+            ctx.clearRect(0, 0, w, h);
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL("image/png"));
+          } else {
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL("image/jpeg", quality || 0.75));
+          }
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function renderScreenshotsList() {
+    const list = document.getElementById("puShotList");
+    list.innerHTML = "";
+    appState.screenshots.forEach((shot, idx) => {
+      const card = document.createElement("div");
+      card.className = "pu-shot-item";
+      const opts = SHOT_SECTIONS.map(s =>
+        `<option value="${s.value}" ${shot.section === s.value ? "selected" : ""}>${s.label}</option>`
+      ).join("");
+
+      card.innerHTML = `
+        <img src="${shot.dataUrl}" alt="${escHtml(shot.caption || shot.name)}" />
+        <div class="pu-field" style="margin-bottom:5px;">
+          <select data-shot-sec="${idx}" style="min-height:30px; font-size:12px; padding:4px 6px;">${opts}</select>
+        </div>
+        <div class="pu-field" style="margin-bottom:6px;">
+          <input type="text" value="${escHtml(shot.caption)}" data-shot-cap="${idx}" placeholder="Caption" style="min-height:30px; font-size:12px; padding:4px 6px;" />
+        </div>
+        <button type="button" class="pu-btn pu-btn-danger" data-shot-del="${idx}" style="width:100%; justify-content:center; min-height:28px; font-size:12px;">Remove</button>
+      `;
+
+      card.querySelector(`[data-shot-sec="${idx}"]`).addEventListener("change", function () {
+        appState.screenshots[idx].section = this.value;
+        refreshCustomerCanvas("Screenshot Section");
+        saveLocalDraft();
+      });
+      card.querySelector(`[data-shot-cap="${idx}"]`).addEventListener("input", function () {
+        appState.screenshots[idx].caption = this.value;
+        refreshCustomerCanvas("Screenshot Caption");
+        saveLocalDraft();
+      });
+      card.querySelector(`[data-shot-del="${idx}"]`).addEventListener("click", function () {
+        appState.screenshots.splice(idx, 1);
+        renderScreenshotsList();
+        refreshCustomerCanvas("Removed Screenshot");
+        saveLocalDraft();
+      });
+
+      list.appendChild(card);
+    });
+  }
+
+  function generateLockedCustomerHtml() {
+    const dateStr = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    const precomputedHtmlByScenario = {};
+    appState.approvedScenarios.forEach(k => {
+      const c = Engine.calculateProposal(appState, k);
+      precomputedHtmlByScenario[k] = buildCustomerReportHtml(c, dateStr);
+    });
+
+    const defaultKey = appState.approvedScenarios.includes(appState.activeScenario)
+      ? appState.activeScenario
+      : appState.approvedScenarios[0];
+
+    const lockedPayload = {
+      meta: {
+        customerName: appState.customerName,
+        reportVersion: appState.reportVersion,
+        dateStr,
+        repName: appState.repName,
+        repEmail: appState.repEmail
+      },
+      htmlByScenario: precomputedHtmlByScenario
+    };
+
+    const pageCss = document.querySelector("style").innerHTML;
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Power Up Solutions Personalized Energy Report — ${escHtml(appState.customerName)}</title>
+  <style>${pageCss}</style>
+</head>
+<body style="margin:0; background:#f4f5f7;">
+<div id="power-up-app">
+  <header class="pu-topbar">
+    <div class="pu-brand-lockup">
+      ${getLogoSvg(38)}
+      <div class="pu-brand-divider"></div>
+      <span class="pu-brand-tag">Personalized Energy Report • ${escHtml(appState.reportVersion)}</span>
+    </div>
+    <div class="no-print" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+      <label style="font-size:12px; font-weight:700; color:#d1d5db;">Utility Scenario:
+        <select id="custScenarioSelect" style="padding:6px 9px; border-radius:6px; font-weight:600; margin-left:4px;">
+          ${appState.approvedScenarios.map(k => `<option value="${k}" ${k === defaultKey ? "selected" : ""}>${scenarioLabel(k)}</option>`).join("")}
+        </select>
+      </label>
+      <button type="button" class="pu-btn" onclick="window.print()">🖨 Print / PDF</button>
+    </div>
+  </header>
+
+  <main style="max-width:820px; margin:0 auto; padding:24px 16px 70px;">
+    <div id="custDocBody">${precomputedHtmlByScenario[defaultKey]}</div>
+
+    <div class="pu-doc-card no-print" style="border:2px solid #15803d; background:#eefbf3;">
+      <h3 style="margin:0 0 6px; font-size:18px;">Ready to Move Forward or Request a Revision?</h3>
+      <p style="font-size:14px; color:#14532d; margin:0 0 12px;">Clicking either button below opens a pre-addressed email draft to <strong>${escHtml(appState.repName)}</strong>. <strong>Please review and click Send in your email app</strong> so our team receives your selection.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:10px;">
+        <a class="pu-btn pu-btn-green" id="btnCustProceed" href="#">✓ Ready to Move Forward</a>
+        <a class="pu-btn pu-btn-gold" id="btnCustRevision" href="#">✎ Request a Revision</a>
+      </div>
+      <p id="custActionNotice" class="pu-help" style="margin-top:10px; font-weight:700; color:#15803d;"></p>
+    </div>
+  </main>
+</div>
+
+<script>
+  (function() {
+    const DATA = ${JSON.stringify(lockedPayload)};
+    const sel = document.getElementById("custScenarioSelect");
+    if (sel) {
+      sel.addEventListener("change", function() {
+        if (DATA.htmlByScenario[this.value]) {
+          document.getElementById("custDocBody").innerHTML = DATA.htmlByScenario[this.value];
+        }
+      });
+    }
+    const cleanRepEmail = (DATA.meta.repEmail || "").trim();
+    const subjProceed = encodeURIComponent("Ready to Move Forward — " + DATA.meta.customerName + " (" + DATA.meta.reportVersion + ")");
+    const bodyProceed = encodeURIComponent("Hi " + DATA.meta.repName + ",\\n\\nI have reviewed my Power Up Solutions Personalized Energy Report (" + DATA.meta.reportVersion + ", dated " + DATA.meta.dateStr + ") and I am ready to move forward.\\n\\nCustomer: " + DATA.meta.customerName + "\\nReport Version: " + DATA.meta.reportVersion);
+    const btnP = document.getElementById("btnCustProceed");
+    btnP.href = "mailto:" + encodeURIComponent(cleanRepEmail) + "?subject=" + subjProceed + "&body=" + bodyProceed;
+    btnP.addEventListener("click", function() {
+      document.getElementById("custActionNotice").textContent = "Email draft opened — please click Send in your email application to notify " + DATA.meta.repName + ".";
+    });
+
+    const subjRev = encodeURIComponent("Revision Request — " + DATA.meta.customerName + " (" + DATA.meta.reportVersion + ")");
+    const bodyRev = encodeURIComponent("Hi " + DATA.meta.repName + ",\\n\\nI reviewed my Power Up Solutions Personalized Energy Report (" + DATA.meta.reportVersion + ") and would like to request the following adjustment:\\n\\n[Type notes here]\\n\\nCustomer: " + DATA.meta.customerName);
+    const btnR = document.getElementById("btnCustRevision");
+    btnR.href = "mailto:" + encodeURIComponent(cleanRepEmail) + "?subject=" + subjRev + "&body=" + bodyRev;
+    btnR.addEventListener("click", function() {
+      document.getElementById("custActionNotice").textContent = "Revision email draft opened — please add your notes and click Send.";
+    });
+  })();
+<\/script>
+</body>
+</html>`;
+  }
+
+  function triggerDownload(filename, content, mimeType) {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  function slugify(str) {
+    return String(str || "customer").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  }
+
+  function enterPresentationMode() {
+    readStateFromForm("Ready for Presentation");
+    if (appState.reportStatus === "Draft" || appState.reportStatus === "Ready to Present") {
+      appState.reportStatus = "Presented";
+      document.getElementById("fReportStatus").value = "Presented";
+      updateConditionalSections();
+      saveLocalDraft();
+    }
+    const root = document.getElementById("power-up-app");
+    root.classList.add("client-fullscreen");
+    document.getElementById("puTopModeTag").textContent = "Client Presentation";
+    document.getElementById("puPreviewBarLabel").textContent = "Customer Presentation";
+    document.getElementById("puChangeToast").textContent = "Locked for Presentation";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function returnToBuilderMode() {
+    const root = document.getElementById("power-up-app");
+    root.classList.remove("client-fullscreen");
+    document.getElementById("puTopModeTag").textContent = "Energy Report Studio";
+    document.getElementById("puPreviewBarLabel").textContent = "Live Customer Preview";
+    document.getElementById("puChangeToast").textContent = "Editing Mode";
+  }
+
+  function finalizeAndEmailProposal() {
+    readStateFromForm("Finalized");
+    appState.reportStatus = "Finalized";
+    document.getElementById("fReportStatus").value = "Finalized";
+    updateConditionalSections();
+    saveLocalDraft();
+
+    const isoDate = new Date().toISOString().slice(0, 10);
+    const niceDate = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    const slugCust = slugify(appState.customerName);
+    const slugVer = slugify(appState.reportVersion);
+
+    const htmlFilename = `power-up-energy-report-${slugCust}-${slugVer}-${isoDate}.html`;
+    const jsonFilename = `power-up-backup-${slugCust}-${slugVer}-${isoDate}.json`;
+
+    triggerDownload(htmlFilename, generateLockedCustomerHtml(), "text/html;charset=utf-8");
+    setTimeout(() => { triggerDownload(jsonFilename, JSON.stringify(appState, null, 2), "application/json"); }, 350);
+
+    const calc = Engine.calculateProposal(appState, appState.activeScenario);
+    const isPropel = appState.offerType === "propel";
+    const productLine = isPropel ? appState.propelTitleLabel : `Clean Energy Agreement (${appState.ceaPartner})`;
+
+    const summaryText = [
+      `Power Up Solutions Personalized Energy Report Summary`,
+      `Customer: ${appState.customerName}`,
+      `Representative: ${appState.repName} (${appState.repEmail}${appState.repPhone ? " | " + appState.repPhone : ""})`,
+      `Report Version: ${appState.reportVersion} | Finalized: ${niceDate}`,
+      `Product: ${productLine}`,
+      `System: ${Number(appState.systemSizeKw).toFixed(2)} kW DC (${appState.panelCount} panels) | Batteries: ${appState.batteryCount}`,
+      `Consumption: ${Number(appState.annualConsumption).toLocaleString()} kWh | Production: ${Number(appState.annualProduction).toLocaleString()} kWh | Offset: ${calc.energyOffsetPct}%`,
+      `Solar vs. Utility (Yr 1): ${fmtCentsOrDollar(calc.yr1SolarRatePerKwh)} / ${fmtMoney(calc.yr1SolarMonthly)}/mo (0%/yr) vs. ${fmtCentsOrDollar(calc.baseUtilityRate)} / ${fmtMoney(calc.currentMonthlyBill)}/mo (${utilityGrowthBadgeText(calc.scenarioKey)})`,
+      `Combined Monthly Budget (Yr 1): ${fmtMoney2(calc.yr1Budget.combinedMonthly)}/mo vs. ${fmtMoney2(calc.yr1Budget.currentUtilityMonthly)}/mo current utility`,
+      `${calc.termYears}-Year Cumulative Savings (${scenarioLabel(calc.scenarioKey)}): ${fmtMoney(calc.lifetimeDirectSolarSavings)}`,
+      ``,
+      `Please open the attached self-contained HTML report (${htmlFilename}) in your browser.`
+    ].join("\n");
+
+    const box = document.getElementById("puExportResultBox");
+    box.style.display = "block";
+    document.getElementById("puExportFilenames").textContent =
+      `Downloaded: ${htmlFilename} (attach this file to your email) & ${jsonFilename} (backup).`;
+    document.getElementById("puEmailSummaryText").value = summaryText;
+
+    const mailSubject = `Power Up Energy Report — ${appState.customerName} — ${appState.reportVersion} — ${niceDate}`;
+    const mailtoHref = `mailto:${encodeURIComponent(appState.customerEmail || "")}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(summaryText)}`;
+
+    document.getElementById("btnOpenMailto").onclick = function () { window.location.href = mailtoHref; };
+    box.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function bindEvents() {
+    document.querySelectorAll(".pu-tab-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        document.querySelectorAll(".pu-tab-btn").forEach(b => {
+          b.classList.remove("active");
+          b.setAttribute("aria-selected", "false");
+        });
+        document.querySelectorAll(".pu-tab-panel").forEach(p => p.classList.remove("active"));
+        this.classList.add("active");
+        this.setAttribute("aria-selected", "true");
+        const target = document.getElementById(this.getAttribute("data-tab"));
+        if (target) target.classList.add("active");
+      });
+    });
+
+    const editorPane = document.getElementById("puEditorPane");
+    editorPane.querySelectorAll("input, select, textarea").forEach(el => {
+      if (el.type === "file") return;
+      const watchName = el.getAttribute("data-watch") || "Report";
+      el.addEventListener("input", () => readStateFromForm(watchName));
+      el.addEventListener("change", () => readStateFromForm(watchName));
+    });
+
+    document.getElementById("fPreviewScenarioSync").addEventListener("change", function () {
+      appState.activeScenario = this.value;
+      document.getElementById("fActiveScenario").value = this.value;
+      refreshCustomerCanvas(scenarioLabel(this.value));
+      saveLocalDraft();
+    });
+
+    document.getElementById("btnFinalizeAndPresent").addEventListener("click", enterPresentationMode);
+    document.getElementById("btnBackToEditor").addEventListener("click", returnToBuilderMode);
+    document.getElementById("btnFooterRevise").addEventListener("click", returnToBuilderMode);
+    document.getElementById("btnTriggerEmailOption").addEventListener("click", finalizeAndEmailProposal);
+    document.getElementById("btnFooterEmailProposal").addEventListener("click", finalizeAndEmailProposal);
+
+    // Escape key to leave presentation mode
+    window.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        const root = document.getElementById("power-up-app");
+        if (root.classList.contains("client-fullscreen")) {
+          returnToBuilderMode();
+        }
+      }
+    });
+
+    document.getElementById("fUtilityProvider").addEventListener("change", function () {
+      const preset = Engine.UTILITY_PRESETS[this.value];
+      if (preset) {
+        document.getElementById("fUtilityRate").value = preset.defaultRate;
+        readStateFromForm(preset.label + " Rate");
+      }
+    });
+
+    document.getElementById("fCeaEquipPreset").addEventListener("change", function () {
+      if (this.value !== "Custom Approved Package") {
+        document.getElementById("fCeaCustomEquip").value = this.value;
+        readStateFromForm("Equipment Package");
+      }
+    });
+
+    const autoCalcBtn = document.getElementById("btnAutoCalcCeaMonthly");
+    if (autoCalcBtn) {
+      autoCalcBtn.addEventListener("click", function () {
+        const prod = parseFloat(document.getElementById("fAnnualProduction").value) || 0;
+        const rate = parseFloat(document.getElementById("fCeaRatePerKwh").value) || 0;
+        const estMonthly = (prod * rate) / 12;
+        document.getElementById("fMonthlySolarPayment").value = estMonthly.toFixed(2);
+        readStateFromForm("CEA Monthly Auto-Calc");
+      });
+    }
+
+    document.getElementById("btnApplyCustomSchedule").addEventListener("click", function () {
+      readStateFromForm("Custom Escalator Schedule");
+      const yr1Rate = appState.customFirstYear;
+      const endYr = Math.min(30, Math.max(1, appState.customRangeEnd));
+      const laterRate = appState.customLaterYears;
+      for (let i = 1; i < 30; i++) appState.customYearRates[i] = i < endYr ? yr1Rate : laterRate;
+      renderYearByYearInputs();
+      refreshCustomerCanvas("Custom Escalator Range");
+      saveLocalDraft();
+    });
+
+    document.getElementById("btnToggleYearEditor").addEventListener("click", function () {
+      const grid = document.getElementById("puYearByYearGrid");
+      grid.style.display = grid.style.display === "none" ? "grid" : "none";
+    });
+
+    document.getElementById("fLogoUpload").addEventListener("change", async function () {
+      if (!this.files || !this.files[0]) return;
+      appState.logoDataUrl = await compressImageFile(this.files[0], 360, 0.88, true);
+      document.getElementById("puTopLogoSlot").innerHTML = getLogoSvg(38);
+      refreshCustomerCanvas("Company Logo");
+      saveLocalDraft();
+    });
+
+    document.getElementById("fShotUpload").addEventListener("change", async function () {
+      if (!this.files || !this.files.length) return;
+      for (let i = 0; i < this.files.length; i++) {
+        const file = this.files[i];
+        const dataUrl = await compressImageFile(file, 1050, 0.76, false);
+        appState.screenshots.push({ name: file.name, section: "design", caption: file.name.replace(/\.[^/.]+$/, ""), dataUrl });
+      }
+      this.value = "";
+      renderScreenshotsList();
+      refreshCustomerCanvas("Added Proposal Image");
+      saveLocalDraft();
+    });
+
+    document.getElementById("btnExportJson").addEventListener("click", function () {
+      readStateFromForm("Backup Exported");
+      const isoDate = new Date().toISOString().slice(0, 10);
+      triggerDownload(`power-up-draft-${slugify(appState.customerName)}-${slugify(appState.reportVersion)}-${isoDate}.json`, JSON.stringify(appState, null, 2), "application/json");
+    });
+
+    const lblImport = document.getElementById("lblImportJson");
+    if (lblImport) {
+      lblImport.addEventListener("keydown", function(e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          document.getElementById("inputImportJson").click();
+        }
+      });
+    }
+
+    document.getElementById("inputImportJson").addEventListener("change", function () {
+      if (!this.files || !this.files[0]) return;
+      const reader = new FileReader();
+      reader.onload = function (ev) {
+        try {
+          const imported = JSON.parse(ev.target.result);
+          if (imported && typeof imported === "object") {
+            appState = { ...appState, ...imported };
+            syncFormFromState();
+            refreshCustomerCanvas("Restored Backup");
+            saveLocalDraft();
+          }
+        } catch (err) { alert("Invalid JSON backup file."); }
+      };
+      reader.readAsText(this.files[0]);
+      this.value = "";
+    });
+
+    document.getElementById("btnCopySummary").addEventListener("click", function () {
+      const ta = document.getElementById("puEmailSummaryText");
+      const btn = this;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ta.value).then(() => {
+          btn.textContent = "✓ Copied!";
+          setTimeout(() => { btn.textContent = "📋 Copy Email Summary"; }, 2000);
+        }).catch(() => {
+          ta.select();
+          document.execCommand("copy");
+          btn.textContent = "✓ Copied!";
+          setTimeout(() => { btn.textContent = "📋 Copy Email Summary"; }, 2000);
+        });
+      } else {
+        ta.select();
+        document.execCommand("copy");
+        btn.textContent = "✓ Copied!";
+        setTimeout(() => { btn.textContent = "📋 Copy Email Summary"; }, 2000);
+      }
+    });
+  }
+
+  loadLocalDraft();
+  syncFormFromState();
+  bindEvents();
+  refreshCustomerCanvas("");
+})();
+</script>
+</body>
+</html>
